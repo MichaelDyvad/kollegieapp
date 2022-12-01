@@ -1,0 +1,14 @@
+npm create vite
+npm init
+
+server package.json
+-type module
+-scripts
+-dependencies
+-npm install
+
+
+
+
+Link for icon png:
+https://www.freeiconspng.com/thumbs/building-icon/office-building-icon-32.png
