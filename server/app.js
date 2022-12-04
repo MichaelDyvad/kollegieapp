@@ -51,9 +51,11 @@ const PORT = process.env.PORT || 8080;
 // import forgotpasswordrouter from "./routers/forgotPasswordRouter.js"
 // app.use(forgotpasswordrouter)
 
-import auth from "./database/auth.js"
-app.use(auth)
+import authRouter from "./routers/authRouter.js"
+app.use(authRouter);
 
+import residentRouter from "./routers/residentRouter.js"
+app.use(residentRouter)
 
 //Middleware
 const redirectLogin = (req, res, next) => {

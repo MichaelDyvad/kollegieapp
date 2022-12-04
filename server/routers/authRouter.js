@@ -1,4 +1,4 @@
-import db from "./connection.js";
+import db from "../database/connection.js";
 
 import { Router } from "express";
 //Database imports
