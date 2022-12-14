@@ -10,6 +10,7 @@
     import Admin from "./components/admin/Admin.svelte";
     import AdminNavbar from "./components/navbar/AdminNavbar.svelte";
     import CreateAdmin from "./components/login/CreateAdmin.svelte";
+    import Residents from "./components/residents/Residents.svelte";
     import {SvelteToast} from '@zerodevx/svelte-toast'
 
 
@@ -19,6 +20,8 @@
     .then(result => {
         role = result.role
     });
+
+
 </script>
 
 
@@ -40,6 +43,10 @@
         {/if}
         </Route>
         
+        <Route path="/residents">
+            <Navbar />
+            <Residents />
+        </Route>
 
         <Route path="/login">
             <Navbar />

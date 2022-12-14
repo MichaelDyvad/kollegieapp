@@ -118,7 +118,7 @@ app.get("/logout", (req, res, next) => {
 //fs is used to read the index.html file in dist folder as a toString, which allows us to use the Router endpoints from svelte
 import fs from "fs"
 const page = fs.readFileSync("../client/dist/index.html").toString()
-app.get(['/home', "/admin", "/login", "/signup", "/forgotpassword", "/createnewadmin"], (req, res) => {
+app.get(['/home', "/admin", "/login", "/signup", "/forgotpassword", "/createnewadmin", "/residents/:room"], (req, res) => {
   res.send(page)
 });
 
