@@ -34,4 +34,7 @@ const arrayOfResidents = [
 {name: "Annika", email:"mail28@mail.dk", password:hashedPassword, room:628, bill:0, role: role},
 ];
 
+const arrayOfAssortment = [{type: "Øl/Sodavand", price: 6}, {type: "Is", price: "2"}]
+
 db.residents.insertMany(arrayOfResidents);
+db.assortment.insertMany(arrayOfAssortment);

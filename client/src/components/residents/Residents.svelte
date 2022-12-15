@@ -1,18 +1,76 @@
 <script>
+      const room = window.location.pathname.split("/").pop();
 
-    const urlParams = new URLSearchParams(window.location.search)
-    const roomNumber = urlParams.has()
+      let residents = [];
+      fetch("http://localhost:8080/api/residents/" + room)
+            .then((res) => res.json())
+            .then((result) => {
+                  residents = result[0].resident;
+            });
 
-    let residentsArray = []
-
-    fetch("http://localhost:8080/api/residents/" + roomNumber)
-    .then((res) => res.json())
-    .then((result) => {
-          residentsArray = result[0].residents
-          console.log(residentsArray)
-    })
+      let assortmentArray = [];
+      fetch("http://localhost:8080/api/assortment")
+      .then(res => res.json())
+      .then(result => {
+            assortmentArray = result[0].assortment
+      })
 
 </script>
-{#each residentsArray as resident}
-      <div class="residentone" ><a href="/residents/{resident.room}">{resident.name} {resident.room}</a></div>
+
+{#each residents as resident}
+<p>TILBAGE KNAP</p>
+<h1>{resident.room}</h1>
+<h1>REGNING: {resident.bill}</h1>
 {/each}
+<div class="container">
+      {#each assortmentArray as assortment}
+      
+            
+            <div class="assortment">
+            <button type="submit">{assortment.type}  {assortment.price}kr</button>
+            </div>
+      {/each}
+</div>
+
+
+<style>
+      .container {
+            display: grid;
+            text-align: center;
+            gap: 30px 40px;
+            grid-template-areas:
+                  "."
+                  "."
+                  "."
+                  "."
+                  "."
+                  "."
+                  ".";
+      }
+
+      button {
+            background-color: #56baed;
+            width: 40%;
+            table-layout: fixed;
+            border: none;
+            color: white;
+            padding: 15px 60px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 13px;
+            -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+            box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+            -webkit-border-radius: 5px 5px 5px 5px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+      }
+
+      h1 {
+            text-align: center;
+      }
+</style>

@@ -1,5 +1,4 @@
 <script>
-
       let residentsArray = []
 
       fetch("http://localhost:8080/api/residents")
@@ -13,7 +12,7 @@
 <h1>Beerbox</h1>
 <div class="container">
 {#each residentsArray as resident}
-      <div class="residentone" ><a href="/residents/{resident.room}">{resident.name} {resident.room}</a></div>
+      <div class="residentone" ><a href="/residents/{resident.room}">{resident.room}</a></div>
 {/each}
 </div>
 
@@ -22,8 +21,6 @@
 .container {
   display: grid; 
   text-align: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr; 
-  grid-template-rows: 2fr 2fr 2fr 2fr 2fr 2fr 2fr; 
   gap: 30px 40px; 
   grid-template-areas: 
     ". . . ."
@@ -37,7 +34,7 @@
 
 a{
   background-color: #56baed;
-  width: 48%;
+  width: 35%;
   table-layout: fixed;
   border: none;
   color: white;

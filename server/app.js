@@ -55,7 +55,10 @@ import authRouter from "./routers/authRouter.js"
 app.use(authRouter);
 
 import residentRouter from "./routers/residentRouter.js"
-app.use(residentRouter)
+app.use(residentRouter);
+
+import assortmentRouter from "./routers/assortmentRouter.js"
+app.use(assortmentRouter);
 
 //Middleware
 const redirectLogin = (req, res, next) => {

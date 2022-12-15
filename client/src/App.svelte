@@ -13,7 +13,6 @@
     import Residents from "./components/residents/Residents.svelte";
     import {SvelteToast} from '@zerodevx/svelte-toast'
 
-
     let role = ""
     fetch("/api/isadmin")
     .then(res => res.json())
@@ -21,9 +20,8 @@
         role = result.role
     });
 
-
+    //let roomNumber = window.location.pathname.split("/").pop()
 </script>
-
 
 <Router>
     
@@ -43,9 +41,9 @@
         {/if}
         </Route>
         
-        <Route path="/residents">
+        <Route path="/residents/:room">
             <Navbar />
-            <Residents />
+            <Residents/>
         </Route>
 
         <Route path="/login">
