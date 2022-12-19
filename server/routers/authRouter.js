@@ -27,6 +27,7 @@ router.post("/signup", async (req, res) => {
     }else{
       db.residents.insertOne({name: name, email:email, password:hashedPassword, room:room, bill:bill, role: role})
       req.session.role = role
+      req.session.name = name
       res.redirect("/admin")
     }
   })
@@ -38,17 +39,19 @@ router.post("/signup", async (req, res) => {
     const dbName = await db.residents.find({name:name}).toArray()
 
     const hashedPassword = dbName[0].password
-
-    if (await bcrypt.compare(password, hashedPassword)) {
-      
-      const sessionUserRole = dbName[0].role
-      req.session.role = sessionUserRole
-      req.session.name = name
-      res.redirect("/admin")
+    try{
+      if (await bcrypt.compare(password, hashedPassword)) {
+        const sessionUserRole = dbName[0].role
+        req.session.role = sessionUserRole
+        req.session.name = name
+        res.redirect("/admin")
+      }
+    }catch (error){
+      console.log(error)
+      res.redirect("/login")
     }
-    else {
-      res.redirect("/admin")
-    }
+    
+    
   })
 
 export default router;

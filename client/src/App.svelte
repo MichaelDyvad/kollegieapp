@@ -12,6 +12,7 @@
     import CreateAdmin from "./components/login/CreateAdmin.svelte";
     import Residents from "./components/residents/Residents.svelte";
     import {SvelteToast} from '@zerodevx/svelte-toast'
+    import EditAssortment from "./components/admin/EditAssortment.svelte";
 
     let role = ""
     fetch("/api/isadmin")
@@ -20,15 +21,19 @@
         role = result.role
     });
 
-    //let roomNumber = window.location.pathname.split("/").pop()
 </script>
 
 <Router>
     
     <main>
         <Route>
+        {#if role === "ADMIN"}
+            <AdminNavbar />
+            <Index />
+        {:else}
             <Navbar />
             <Index />
+        {/if}
         </Route>
 
         <Route path="/home">
@@ -39,6 +44,11 @@
             <Navbar />
             <Home />
         {/if}
+        </Route>
+
+        <Route path="/editassortment">
+            <AdminNavbar />
+            <EditAssortment />
         </Route>
         
         <Route path="/residents/:room">

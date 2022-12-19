@@ -11,13 +11,13 @@
         
       <!-- Login Form -->
       <form action="/login" method="POST">
-        <input type="text" id="login-email" class="fadeIn second" name="residentname" placeholder="name">
-        <input type="text" id="login-password" class="fadeIn third" name="password" placeholder="password">
+        <input type="text" id="login-email" class="fadeIn second" name="residentname" placeholder="name" required>
+        <input type="text" id="login-password" class="fadeIn third" name="password" placeholder="password" required>
         <input type="submit" class="fadeIn fourth" value="Log In">
       </form>
   
 
-      <!-- Remind Passowrd -->
+      <!-- Forgot Passowrd -->
     <div id="formFooter">
         <a class="underlineHover" href="/forgotpassword">Forgot Password?</a>
     </div>

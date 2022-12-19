@@ -1,7 +1,8 @@
 import db from "./connection.js"
 import bcrypt from "bcrypt"
 
-const hashedPassword = bcrypt.hash("123", 10)
+const hashedPassword = await bcrypt.hash("123", 10)
+console.log(hashedPassword)
 const role = "USER"
 const arrayOfResidents = [
 {name: "Asger", email:"mail1@mail.dk", password:hashedPassword, room:601, bill:0, role: role},
@@ -32,9 +33,10 @@ const arrayOfResidents = [
 {name: "Maria", email:"mail26@mail.dk", password:hashedPassword, room:626, bill:0, role: role},
 {name: "Daniel", email:"mail27@mail.dk", password:hashedPassword, room:627, bill:0, role: role},
 {name: "Annika", email:"mail28@mail.dk", password:hashedPassword, room:628, bill:0, role: role},
+{name: "Admin", email: "admin@admin.dk", password: hashedPassword, room: 600, bill:0, role: "ADMIN"}
 ];
 
-const arrayOfAssortment = [{type: "Øl/Sodavand", price: 6}, {type: "Is", price: "2"}]
+const arrayOfAssortment = [{option: 1, type: "Øl/Sodavand", price: 6}, {option: 2, type: "Is", price: 2}]
 
 db.residents.insertMany(arrayOfResidents);
 db.assortment.insertMany(arrayOfAssortment);

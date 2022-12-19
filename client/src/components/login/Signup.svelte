@@ -11,10 +11,10 @@
         
       <!-- singup Form -->
       <form action="/signup" method="POST">
-        <input type="text" id="residentname" class="fadeIn second" name="residentname" placeholder="residentname">
-        <input type="email" id="email" class="fadeIn second" name="email" placeholder="email">
-        <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
-        <input type="text" id="room" class="fadeIn third" name="room" placeholder="room">
+        <input type="text" id="residentname" class="fadeIn second" name="residentname" placeholder="residentname" required>
+        <input type="email" id="email" class="fadeIn second" name="email" placeholder="email" required>
+        <input type="text" id="password" class="fadeIn third" name="password" placeholder="password" required>
+        <input type="text" id="room" class="fadeIn third" name="room" placeholder="room" required>
         <input type="submit" id="signup-btn" class="fadeIn fourth" value="Sign-up">
       </form>
     </div>
