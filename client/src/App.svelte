@@ -9,10 +9,10 @@
     import Home from "./components/home/Home.svelte"
     import Admin from "./components/admin/Admin.svelte";
     import AdminNavbar from "./components/navbar/AdminNavbar.svelte";
-    import CreateAdmin from "./components/login/CreateAdmin.svelte";
     import Residents from "./components/residents/Residents.svelte";
     import {SvelteToast} from '@zerodevx/svelte-toast'
     import EditAssortment from "./components/admin/EditAssortment.svelte";
+    import EditResident from "./components/admin/EditResident.svelte";
 
     let role = ""
     fetch("/api/isadmin")
@@ -50,6 +50,11 @@
             <AdminNavbar />
             <EditAssortment />
         </Route>
+
+        <Route path="/editresident">
+            <AdminNavbar />
+            <EditResident />
+        </Route>
         
         <Route path="/residents/:room">
             <Navbar />
@@ -69,11 +74,6 @@
         <Route path="/admin">
             <AdminNavbar />
             <Admin />
-        </Route>
-            
-        <Route path="/createnewadmin">
-            <AdminNavbar />
-            <CreateAdmin />
         </Route>
 
         <Route path="/forgotpassword">

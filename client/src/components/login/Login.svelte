@@ -12,7 +12,7 @@
       <!-- Login Form -->
       <form action="/login" method="POST">
         <input type="text" id="login-email" class="fadeIn second" name="residentname" placeholder="name" required>
-        <input type="text" id="login-password" class="fadeIn third" name="password" placeholder="password" required>
+        <input type="password" id="login-password" class="fadeIn third" name="password" placeholder="password" required>
         <input type="submit" class="fadeIn fourth" value="Log In">
       </form>
   
@@ -106,7 +106,7 @@ input[type=submit]:active{
   transform: scale(0.95);
 }
 
-input[type=text] {
+input[type=text], [type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;

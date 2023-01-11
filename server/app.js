@@ -60,6 +60,9 @@ app.use(residentRouter);
 import assortmentRouter from "./routers/assortmentRouter.js"
 app.use(assortmentRouter);
 
+import taskRouter from "./routers/taskRouter.js"
+app.use(taskRouter)
+
 //Middleware
 const redirectLogin = (req, res, next) => {
   if (!req.session.role) {
@@ -105,11 +108,11 @@ app.get("/api/user", (req, res) => {
 //Restriction for endpoint roles
 app.use("/home", generalLimiter, redirectLogin);
 app.use("/admin", generalLimiter, onlyAdmin);
-app.use("/createnewadmin", generalLimiter, onlyAdmin)
 app.use("/login", generalLimiter, redirectHome);
 app.use("/signup", generalLimiter, redirectHome);
 app.use("/forgotpassword", generalLimiter);
 app.use("/editassortment", generalLimiter, onlyAdmin)
+app.use("/editresident", generalLimiter, onlyAdmin)
 
 
 //Logout to destroy session, so that you can login again
@@ -122,7 +125,7 @@ app.get("/logout", (req, res, next) => {
 //fs is used to read the index.html file in dist folder as a toString, which allows us to use the Router endpoints from svelte
 import fs from "fs"
 const page = fs.readFileSync("../client/dist/index.html").toString()
-app.get(['/home', "/admin", "/login", "/signup", "/forgotpassword", "/createnewadmin", "/residents/:room", "/editassortment"], (req, res) => {
+app.get(['/home', "/admin", "/login", "/signup", "/forgotpassword", "/residents/:room", "/editassortment", "/editresident"], (req, res) => {
   res.send(page)
 });
 

@@ -7,18 +7,21 @@
             residentsArray = result[0].residents
       })
       
-      let bill = 0
-      residentsArray.forEach(resident => {
-            bill += resident[0].bill
+      let bill = []
+      
+      fetch("http://localhost:8080/api/bills")
+      .then((res => res.json()))
+      .then((result) => {
+            bill = result[0].bills
       })
-      console.log(bill) 
+      
 </script>
 
 <h1>Overview</h1>
-<h1>Summed bills = {bill}</h1>
+<h1>Summed bills = {bill.summedBills}</h1>
 <div class="container">
 {#each residentsArray as resident}
-      <div class="residentone" ><a href="/residents/{resident.room}">{resident.room} : {resident.bill}kr</a></div>
+      <div class="residentone" ><a href="/admin">{resident.room} : {resident.bill}kr</a></div>
 {/each}
 </div>
 

@@ -19,7 +19,7 @@
 <br>
 <a href="/">Gå tilbage</a>
 {#each residents as resident}
-<h1>{resident.room}</h1>
+<h1>{resident.room} : {resident.name}</h1>
 <h1>REGNING: {resident.bill}</h1>
 {/each}
 <div class="container">

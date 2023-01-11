@@ -16,8 +16,16 @@ router.post("/editassortment", async (req, res) => {
 
     console.log(assortmentOption + editAssortmentType + editAssortmentPrice)
 
-    const updateAssortment = await db.assortment.updateOne({type: assortmentOption}, {$set: {type: editAssortmentType, price: Number(editAssortmentPrice)}})
+    await db.assortment.updateOne({type: assortmentOption}, {$set: {type: editAssortmentType, price: Number(editAssortmentPrice)}})
     res.redirect("/editassortment")
 })
+
+router.post("/editassortment"), async (req, res) => {
+    const addAssortmentType = req.body.addassortmenttype
+    const addAssortmentPrice = req.body.addassortmentprice
+
+    await db.assortment.insertOne({type: addAssortmentType, price: addAssortmentPrice})
+    res.redirect("/editassortment")
+}
 
 export default router;

@@ -11,7 +11,7 @@
 <form action="/editassortment" method="POST">
   <select name="assortmentoption">
     {#each assortmentArray as assortment}
-      <option name="assortmentoption" value="{assortment.type}">{assortment.type}</option>
+      <option value="{assortment.type}">{assortment.type}</option>
     {/each}
     </select>
   <input name="editassortmenttype" type="text" placeholder="Enter new type">
@@ -20,8 +20,8 @@
 </form>
 
 <h1>Add new assortment</h1>
-<form action="/admin" method="POST">
-  <input type="text" placeholder="Enter new type">
-  <input type="text" placeholder="Enter new price">
+<form action="/editassortment" method="POST">
+  <input name="addassortmenttype" type="text" placeholder="Enter new type">
+  <input name="addassortmentprice" type="text" placeholder="Enter new price">
   <button type="submit">Add to assortment</button>
 </form>

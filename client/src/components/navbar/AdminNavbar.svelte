@@ -11,7 +11,7 @@
     fetch("/api/user")
       .then((res) => res.json())
       .then((result) => {
-        email = result.email;
+        email = result.name;
     });
 </script>
 
@@ -24,7 +24,6 @@
   <div class="dropdown">
     <button class="dropbtn">Admin options</button>
     <div class="dropdown-content">
-      <a href="/createnewadmin">Create new admin</a>
       <a href="/editresident">Edit resident</a>
       <a href="/editassortment">Edit assortment</a>
     </div>
