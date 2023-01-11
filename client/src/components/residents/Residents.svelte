@@ -6,6 +6,7 @@
             .then((res) => res.json())
             .then((result) => {
                   residents = result[0].resident;
+                  console.log(residents)
             });
 
       let assortmentArray = [];

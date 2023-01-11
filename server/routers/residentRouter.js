@@ -16,7 +16,7 @@ router.get("/api/residents", async (req, res) => {
 
 router.get("/api/residents/:room", async (req, res) => {
     const getResident = await db.residents.find({ room: Number(req.params.room) }).toArray();
-    const residentModified = {id: getResident[0]._id, name: getResident[0].name, email : getResident[0].email, room: getResident[0].room, bill: getResident[0].bill, role: getResident[0].role}
+    const residentModified = [{id: getResident[0]._id, name: getResident[0].name, email : getResident[0].email, room: getResident[0].room, bill: getResident[0].bill, role: getResident[0].role}]
     res.send([{ resident: residentModified }])
 })
 
@@ -68,10 +68,9 @@ router.get("/api/bills", async (req, res) => {
     res.send([{ bills: { summedBills: billSum } }])
 })
 
-router.delete("/editresident", async (req, res) => {
-    const residentSelect = req.body.deleteresidentselect
-    const resident = await db.residents.findByIdAndRemove({_id: Number(residentSelect)})
-    console.log(resident)
+router.delete("/editresident/:room", async (req, res) => {
+    await db.residents.deleteOne({room: Number(req.params.room)})
+    res.redirect("/editresident")
 })
 
 export default router;

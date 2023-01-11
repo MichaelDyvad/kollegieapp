@@ -25,3 +25,8 @@
   <input name="addassortmentprice" type="text" placeholder="Enter new price">
   <button type="submit">Add to assortment</button>
 </form>
+
+<h1>Delete assortment</h1>
+<form action="">
+  
+</form>
