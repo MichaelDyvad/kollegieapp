@@ -17,7 +17,7 @@ router.post("/signup", async (req, res) => {
     const room = req.body.room
     const bill = 0
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const role = "ADMIN"
+    const role = "USER"
 
     let nameExist = await db.residents.find({name:name}).toArray()
 

@@ -14,10 +14,35 @@ router.get("/api/residents", async (req, res) => {
     res.send([{ residents: residentArray }])
 })
 
+//Gets one resident on room
 router.get("/api/residents/:room", async (req, res) => {
     const getResident = await db.residents.find({ room: Number(req.params.room) }).toArray();
     const residentModified = [{id: getResident[0]._id, name: getResident[0].name, email : getResident[0].email, room: getResident[0].room, bill: getResident[0].bill, role: getResident[0].role}]
     res.send([{ resident: residentModified }])
+})
+
+//Edit the whole entity of the resident
+router.post("/editresident", async (req, res) => {
+    const room = req.body.roomnumber
+    const updateName = req.body.residentname
+    const updateEmail = req.body.residentemail
+    const updatePassword = await bcrypt.hash(req.body.residentpassword, 10)
+    const updateBill = req.body.residentbill
+    const updateRole = req.body.residentrole
+
+    await db.residents.updateOne(
+        { room: Number(room) },
+        {
+            $set: { name: updateName, email: updateEmail, password: updatePassword, bill: updateBill, role: updateRole }
+        })
+
+    res.redirect("editresident")
+})
+
+//Delets resident on room
+router.delete("/editresident/:room", async (req, res) => {
+    await db.residents.deleteOne({room: Number(req.params.room)})
+    res.redirect("/editresident")
 })
 
 //Increment bill on resident on room
@@ -39,24 +64,6 @@ router.post("/residents/:room", async (req, res) => {
 
 })
 
-//Edit the whole entity of the resident
-router.post("/editresident", async (req, res) => {
-    const room = req.body.roomnumber
-    const updateName = req.body.residentname
-    const updateEmail = req.body.residentemail
-    const updatePassword = await bcrypt.hash(req.body.residentpassword, 10)
-    const updateBill = req.body.residentbill
-    const updateRole = req.body.residentrole
-
-    await db.residents.updateOne(
-        { room: Number(room) },
-        {
-            $set: { name: updateName, email: updateEmail, password: updatePassword, bill: updateBill, role: updateRole }
-        })
-
-    res.redirect("editresident")
-})
-
 //Sum bills for api and overview for admin when payment is due
 router.get("/api/bills", async (req, res) => {
     const getResident = await db.residents.find({}).toArray();
@@ -66,11 +73,6 @@ router.get("/api/bills", async (req, res) => {
         billSum += Number(resident.bill)
     })
     res.send([{ bills: { summedBills: billSum } }])
-})
-
-router.delete("/editresident/:room", async (req, res) => {
-    await db.residents.deleteOne({room: Number(req.params.room)})
-    res.redirect("/editresident")
 })
 
 export default router;

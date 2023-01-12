@@ -20,20 +20,22 @@
 </script>
 
 <h1>Home</h1>
-
-<div class="container">
+<div class="container-textarea">
   <form action="/home" method="POST">
+    <h3>Write your task to property manager here</h3>
     <textarea name="tasktextarea" id="" cols="60" rows="5" />
+    <br>
     <button type="submit">Add task</button>
   </form>
 </div>
-
 <br />
+
+
 {#each tasks as task}
-<div class="layout">
-  <div class="grow1">Who wrote: {task.writer} Date: {task.date}</div>
-  <div class="grow1">{task.task}</div>
-  <div class="grow1">Options: Edit/Delete</div>
+<div class="container">
+  <div><p>Writer: {task.writer} <br> Date: {task.date}</p></div>
+  <div><p>Task: <br> {task.task}</p></div>
+  <div><p>Options: <br> Edit/Delete</p></div>
 </div>
 {/each}
 
@@ -48,9 +50,21 @@
 {/if}
 
 <style>
-  .container {
+  h3{
+    color: #56baed;
+  }
+
+  .container-textarea {
     display: grid;
     text-align: center;
+  }
+
+  .container {
+    display: flex;
+  }
+
+  .container > div {
+    flex: 1; /*grow*/
   }
 
   textarea {
@@ -90,20 +104,4 @@
     text-align: center;
   }
 
-  .layout {
-    width: 100%;
-
-    display: flex;
-    gap: 4px;
-
-    justify-content: center;
-    align-items: center;
-    background-color: azure;
-  }
-
-  .grow1 {
-    flex-grow: 1;
-    text-align: center;
-    background-color: aqua;
-  }
 </style>

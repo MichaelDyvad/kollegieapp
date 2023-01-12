@@ -9,7 +9,7 @@
       })
 </script>
 
-<h1>Beerbox</h1>
+<h1>Beerfridge</h1>
 <div class="container">
 {#each residentsArray as resident}
       <div class="residentone" ><a href="/residents/{resident.room}">{resident.room}</a></div>

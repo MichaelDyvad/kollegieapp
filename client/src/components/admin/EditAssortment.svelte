@@ -5,28 +5,61 @@
       .then(result => {
             assortmentArray = result[0].assortment
       })
+      let selectedDelete;
+      const deleteAssortment = async () => {
+        await fetch("/editassortment/" + selectedDelete.type, {
+            method: "DELETE"
+        })
+        location.reload()
+    }
+
+    let selected;
+    let type;
+    let price;
+
+    const patchAssortment = async () => {
+        await fetch("/editassortment/" + selected.type, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: type,
+                price: price
+            })
+        })
+        location.reload()
+    }
 </script>
 
 <h1>Edit assortment</h1>
-<form action="/editassortment" method="POST">
-  <select name="assortmentoption">
+<form on:submit|preventDefault={patchAssortment}>
+  <select name="assortmentoption" bind:value={selected}>
     {#each assortmentArray as assortment}
-      <option value="{assortment.type}">{assortment.type}</option>
+      <option value="{assortment}">{assortment.type}</option>
     {/each}
     </select>
-  <input name="editassortmenttype" type="text" placeholder="Enter new type">
-  <input name="editassortmentprice" type="text" placeholder="Enter new price">
+
+  <input name="type" type="text" placeholder="Enter new type" bind:value={type} >
+  <input name="price" type="text" placeholder="Enter new price" bind:value={price}>
   <button type="submit">Edit assortment</button>
 </form>
 
-<h1>Add new assortment</h1>
+<h1>Add new to assortment</h1>
 <form action="/editassortment" method="POST">
-  <input name="addassortmenttype" type="text" placeholder="Enter new type">
-  <input name="addassortmentprice" type="text" placeholder="Enter new price">
+  <input name="addassortmenttype" type="text" placeholder="Enter new type" required>
+  <input name="addassortmentprice" type="text" placeholder="Enter new price" required>
   <button type="submit">Add to assortment</button>
 </form>
 
 <h1>Delete assortment</h1>
-<form action="">
-  
+<form on:submit|preventDefault={deleteAssortment}>
+    <select name="deleteassortmentselect" bind:value={selectedDelete}>
+        {#each assortmentArray as assortment}
+            <option value="{assortment}">{assortment.type}</option>
+        {/each}
+    </select>
+    <button type="submit">Delete assortment</button>
 </form>
+
+<p>{type} {price}</p>
