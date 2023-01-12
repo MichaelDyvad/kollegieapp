@@ -13,7 +13,8 @@
     import {SvelteToast} from '@zerodevx/svelte-toast'
     import EditAssortment from "./components/admin/EditAssortment.svelte";
     import EditResident from "./components/admin/EditResident.svelte";
-
+    import Tasks from "./components/tasks/Tasks.svelte";
+    
     let role = ""
     fetch("/api/isadmin")
     .then(res => res.json())
@@ -24,7 +25,6 @@
 </script>
 
 <Router>
-    
     <main>
         <Route>
         {#if role === "ADMIN"}
@@ -43,6 +43,16 @@
         {:else}
             <Navbar />
             <Home />
+        {/if}
+        </Route>
+
+        <Route path="/tasks">
+        {#if role === "ADMIN"}
+            <AdminNavbar />
+            <Tasks />
+        {:else}
+            <Navbar />
+            <Tasks />
         {/if}
         </Route>
 

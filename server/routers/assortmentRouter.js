@@ -14,15 +14,7 @@ router.get("/api/assortment/:type", async (req, res) => {
     res.send([{ assortment: getAssortment }])
 })
 
-//Edit assortment
-router.patch("/editassortment/:type", async (req, res) => {
-    console.log(req.params.type)
-    const type = req.body.type
-    const price = req.body.price
-    await db.assortment.updateOne({ type: req.params.type }, { $set: { type: type, price: Number(price) } })
-    res.redirect("/editassortment")
-})
-
+//Add to assortment
 router.post("/editassortment", async (req, res) => {
     const addAssortmentType = req.body.addassortmenttype
     const addAssortmentPrice = req.body.addassortmentprice
@@ -31,7 +23,15 @@ router.post("/editassortment", async (req, res) => {
     res.redirect("/editassortment")
 })
 
-//Delets resident on room
+//Edit assortment
+router.patch("/editassortment/:type", async (req, res) => {
+    const updateObject = req.body
+    console.log(updateObject)
+    await db.assortment.updateOne({ type: req.params.type }, { $set: updateObject})
+    res.redirect("/editassortment")
+})
+
+//Deletes assortment on type
 router.delete("/editassortment/:type", async (req, res) => {
     await db.assortment.deleteOne({ type: req.params.type })
     res.redirect("/editassortment")

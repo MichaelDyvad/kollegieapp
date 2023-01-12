@@ -5,6 +5,7 @@
       .then(result => {
             assortmentArray = result[0].assortment
       })
+
       let selectedDelete;
       const deleteAssortment = async () => {
         await fetch("/editassortment/" + selectedDelete.type, {
@@ -13,23 +14,23 @@
         location.reload()
     }
 
-    let selected;
-    let type;
-    let price;
+      let selected;
+      let type;
+      let price;
 
-    const patchAssortment = async () => {
-        await fetch("/editassortment/" + selected.type, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                type: type,
-                price: price
-            })
-        })
-        location.reload()
-    }
+      const patchAssortment = async () => {
+          await fetch("/editassortment/" + selected.type, {
+              method: "PATCH",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                  type: type,
+                  price: price
+              })
+          })
+          location.reload()
+      }
 </script>
 
 <h1>Edit assortment</h1>
@@ -40,8 +41,8 @@
     {/each}
     </select>
 
-  <input name="type" type="text" placeholder="Enter new type" bind:value={type} >
-  <input name="price" type="text" placeholder="Enter new price" bind:value={price}>
+  <input name="type" type="text" placeholder="type: {selected ? selected.type : '[waiting...]'}" bind:value={type}>
+  <input name="price" type="text" placeholder="price: {selected ? selected.price : '[waiting...]'}" bind:value={price}>
   <button type="submit">Edit assortment</button>
 </form>
 
@@ -61,5 +62,3 @@
     </select>
     <button type="submit">Delete assortment</button>
 </form>
-
-<p>{type} {price}</p>

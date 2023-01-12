@@ -18,6 +18,7 @@ fetch("/api/isadmin")
 <ul>
     <li><a href="/">Beerfridge</a></li>
     <li><a href="/home">Home</a></li>
+    <li><a href="/tasks">Tasks</a></li>
     <li><a href="/login">Login</a></li>
     <li><a href="/signup">Signup</a></li>
     <li><a href="/logout">Logout</a></li>

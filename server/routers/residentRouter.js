@@ -22,21 +22,25 @@ router.get("/api/residents/:room", async (req, res) => {
 })
 
 //Edit the whole entity of the resident
-router.post("/editresident", async (req, res) => {
-    const room = req.body.roomnumber
-    const updateName = req.body.residentname
-    const updateEmail = req.body.residentemail
-    const updatePassword = await bcrypt.hash(req.body.residentpassword, 10)
-    const updateBill = req.body.residentbill
-    const updateRole = req.body.residentrole
-
-    await db.residents.updateOne(
-        { room: Number(room) },
-        {
-            $set: { name: updateName, email: updateEmail, password: updatePassword, bill: updateBill, role: updateRole }
-        })
-
-    res.redirect("editresident")
+router.patch("/editresident/:room", async (req, res) => {
+    const updateObject = req.body
+    const keyOfReq = Object.keys(req.body)
+    const valueOfReq = Object.values(req.body)
+    if(keyOfReq[0] === 'password'){
+        const password = await bcrypt.hash(valueOfReq[0], 10);
+        await db.residents.updateOne(
+            { room: Number(req.params.room) },
+            {
+                $set: {password: password}
+            })
+    }else{
+        await db.residents.updateOne(
+            { room: Number(req.params.room) },
+            {
+                $set: updateObject
+            })
+    }
+    res.redirect("/editresident")
 })
 
 //Delets resident on room
