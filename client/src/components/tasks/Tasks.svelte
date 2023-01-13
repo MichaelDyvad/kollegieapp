@@ -1,19 +1,6 @@
 <script>
     import Modal from "../modal/Modal.svelte";
 
-    let showModal = false;
-
-    function openModal(e) {
-        e.preventDefault();
-        let id = e.target.parentElement.parentElement.parentElement.id
-        
-
-        showModal = true;
-    }
-
-    function closeModal() {
-        showModal = false;
-    }
 
     let name = "";
     fetch("/api/user")
@@ -27,8 +14,40 @@
         .then((res) => res.json())
         .then((result) => {
             tasks = result[0].tasks;
-            console.log(tasks);
         });
+
+    
+    let showModal = false;
+
+    let editModalValue;
+    let taskId;
+    function openModal(e) {
+        e.preventDefault();
+        taskId = e.target.parentElement.parentElement.id
+        fetch("/api/tasks/" + taskId)
+        .then(res => res.json())
+        .then(result => {
+            editModalValue = result[0].task[0].task
+        })
+        showModal = true;
+    }
+
+    const patchTask = async () => {
+        await fetch("/tasks/" + taskId, {
+              method: "PATCH",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                  task: editModalValue
+              })
+          })
+          location.reload()
+    }
+
+    function closeModal() {
+        showModal = false;
+    }
     
     const deleteTask = async (e) => {
         e.preventDefault();
@@ -70,16 +89,16 @@ Task:
             <button on:click={deleteTask} id="delete-button">Delete task</button>
         </div>
         {:else}
-            <p>Options:</p>
+            <div></div>
         {/if}
     </div>
 {/each}
 
 {#if showModal}
     <Modal>
-        <form action="/tasks" method="POST">
+        <form on:submit|preventDefault={patchTask}>
             <h3>Edit task</h3>
-            <textarea name="tasktextarea" class="textarea-add-task" cols="60" rows="5"></textarea>
+            <textarea name="task" class="textarea-add-task" cols="60" rows="5" bind:value={editModalValue}></textarea>
             <button type="submit">Edit task</button>
         </form>
         <button on:click={closeModal}>Close</button>
