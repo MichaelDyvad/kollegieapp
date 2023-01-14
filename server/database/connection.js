@@ -13,5 +13,6 @@ const dormDB = client.db("dorm");
 export default {
     residents: dormDB.collection("residents"),
     assortment: dormDB.collection("assortment"),
-    tasks: dormDB.collection("tasks")
+    tasks: dormDB.collection("tasks"),
+    laundry: dormDB.collection("laundry")
 };

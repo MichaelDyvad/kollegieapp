@@ -14,6 +14,7 @@
     import EditAssortment from "./components/admin/EditAssortment.svelte";
     import EditResident from "./components/admin/EditResident.svelte";
     import Tasks from "./components/tasks/Tasks.svelte";
+    import Laundry from "./laundry/Laundry.svelte";
     
     let role = ""
     fetch("/api/isadmin")
@@ -53,6 +54,16 @@
         {:else}
             <Navbar />
             <Tasks />
+        {/if}
+        </Route>
+
+        <Route path="laundry">
+            {#if role === "ADMIN"}
+            <AdminNavbar />
+            <Laundry />
+        {:else}
+            <Navbar />
+            <Laundry />
         {/if}
         </Route>
 

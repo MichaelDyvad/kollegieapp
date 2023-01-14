@@ -2,7 +2,7 @@
       const room = window.location.pathname.split("/").pop();
 
       let residents = [];
-      fetch("http://localhost:8080/api/residents/" + room)
+      fetch("/api/residents/" + room)
             .then((res) => res.json())
             .then((result) => {
                   residents = result[0].resident;
@@ -10,7 +10,7 @@
             });
 
       let assortmentArray = [];
-      fetch("http://localhost:8080/api/assortment")
+      fetch("/api/assortment")
       .then(res => res.json())
       .then(result => {
             assortmentArray = result[0].assortment
@@ -21,7 +21,7 @@
 <a href="/">Gå tilbage</a>
 {#each residents as resident}
 <h1>{resident.room} : {resident.name}</h1>
-<h1>REGNING: {resident.bill}</h1>
+<h1>REGNING: {resident.bill}kr</h1>
 {/each}
 <div class="container">
       {#each assortmentArray as assortment}

@@ -1,5 +1,5 @@
 <script>
-    let selectedDelete;
+    
     let residentsArray = [];
     
     fetch("http://localhost:8080/api/residents")
@@ -10,7 +10,7 @@
         });
     
     let selected;
-
+    let selectedDelete;
     const deleteResident = async () => {
         await fetch("/editresident/" + selectedDelete.room, {
             method: "DELETE"
@@ -63,7 +63,7 @@
 
 <h1>Delete resident</h1>
 <form on:submit|preventDefault={deleteResident}>
-    <select name="deleteresidentselect" bind:value={selectedRole}>
+    <select name="deleteresidentselect" bind:value={selectedDelete}>
         {#each residentsArray as resident}
             <option value="{resident}">{resident.room} : {resident.name}</option>
         {/each}

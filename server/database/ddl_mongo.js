@@ -2,8 +2,9 @@ import db from "./connection.js"
 import bcrypt from "bcrypt"
 
 const hashedPassword = await bcrypt.hash("123", 10)
-console.log(hashedPassword)
+
 const role = "USER"
+
 const arrayOfResidents = [
 {name: "Asger", email:"mail1@mail.dk", password:hashedPassword, room:601, bill:0, role: role},
 {name: "Evode", email:"mail2@mail.dk", password:hashedPassword, room:602, bill:0, role: role},
@@ -36,7 +37,93 @@ const arrayOfResidents = [
 {name: "Admin", email: "admin@admin.dk", password: hashedPassword, room: 600, bill:0, role: "ADMIN"}
 ];
 
-const arrayOfAssortment = [{option: 1, type: "Øl/Sodavand", price: 6}, {option: 2, type: "Is", price: 2}]
+const arrayOfAssortment = [
+    {option: 1, type: "Øl/Sodavand", price: 6}, 
+    {option: 2, type: "Is", price: 2}
+];
 
+const arrayOfLaundry = [
+    {day: "monday", room: ""},
+    {day: "monday", room: ""},
+    {day: "monday", room: ""},
+    {day: "monday", room: ""},
+    {day: "monday", room: ""},
+    {day: "monday", room: ""},
+    {day: "monday", room: ""},
+    {day: "monday", room: ""},
+    {day: "monday", room: ""},
+    {day: "monday", room: ""},
+    
+    {day: "tuesday", room: ""},
+    {day: "tuesday", room: ""},
+    {day: "tuesday", room: ""},
+    {day: "tuesday", room: ""},
+    {day: "tuesday", room: ""},
+    {day: "tuesday", room: ""},
+    {day: "tuesday", room: ""},
+    {day: "tuesday", room: ""},
+    {day: "tuesday", room: ""},
+    {day: "tuesday", room: ""},
+
+    {day: "wednesday", room: ""},
+    {day: "wednesday", room: ""},
+    {day: "wednesday", room: ""},
+    {day: "wednesday", room: ""},
+    {day: "wednesday", room: ""},
+    {day: "wednesday", room: ""},
+    {day: "wednesday", room: ""},
+    {day: "wednesday", room: ""},
+    {day: "wednesday", room: ""},
+    {day: "wednesday", room: ""},
+
+    {day: "thursday", room: ""},
+    {day: "thursday", room: ""},
+    {day: "thursday", room: ""},
+    {day: "thursday", room: ""},
+    {day: "thursday", room: ""},
+    {day: "thursday", room: ""},
+    {day: "thursday", room: ""},
+    {day: "thursday", room: ""},
+    {day: "thursday", room: ""},
+    {day: "thursday", room: ""},
+
+    {day: "friday", room: ""},
+    {day: "friday", room: ""},
+    {day: "friday", room: ""},
+    {day: "friday", room: ""},
+    {day: "friday", room: ""},
+    {day: "friday", room: ""},
+    {day: "friday", room: ""},
+    {day: "friday", room: ""},
+    {day: "friday", room: ""},
+    {day: "friday", room: ""},
+
+    {day: "saturday", room: ""},
+    {day: "saturday", room: ""},
+    {day: "saturday", room: ""},
+    {day: "saturday", room: ""},
+    {day: "saturday", room: ""},
+    {day: "saturday", room: ""},
+    {day: "saturday", room: ""},
+    {day: "saturday", room: ""},
+    {day: "saturday", room: ""},
+    {day: "saturday", room: ""},
+
+    {day: "sunday", room: ""},
+    {day: "sunday", room: ""},
+    {day: "sunday", room: ""},
+    {day: "sunday", room: ""},
+    {day: "sunday", room: ""},
+    {day: "sunday", room: ""},
+    {day: "sunday", room: ""},
+    {day: "sunday", room: ""},
+    {day: "sunday", room: ""},
+    {day: "sunday", room: ""},
+];
+
+db.residents.deleteMany({})
+db.assortment.deleteMany({})
+
+db.laundry.insertMany(arrayOfLaundry);
 db.residents.insertMany(arrayOfResidents);
 db.assortment.insertMany(arrayOfAssortment);

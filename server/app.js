@@ -1,12 +1,19 @@
 import express from "express";
-const app = express();
 
-app.use(express.json())
+import http from "http";
+import { Server } from "socket.io";
 
 import path from "path"
 import dotenv from "dotenv"
-dotenv.config()
 
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+dotenv.config()
+app.use(express.json())
+//Resolves the folder
+app.use(express.static(path.resolve("../client/dist")))
 
 import rateLimit from "express-rate-limit"
 //Limiter det gør at der kun må blive sendt et hvis antal request pr. 10 minut
@@ -15,15 +22,12 @@ const generalLimiter = rateLimit({
   max: 80
 })
 
-//Resolves the folder
-app.use(express.static(path.resolve("../client/dist")))
-
 import session from "express-session"
 //måske skal der bruges cookie.path som gør specificerer hvornår man får tildelt en cookie
 const maxAgeTime = 1000 * 60 * 60
 const sessionName = "cookiename"
 
-app.use(session({
+const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -33,7 +37,9 @@ app.use(session({
     secure: false,
     maxAge: maxAgeTime
   }
-}))
+})
+
+app.use(sessionMiddleware)
 
 import cors from "cors"
 app.use(cors())
@@ -44,8 +50,6 @@ app.use(express.urlencoded({
 }))
 
 app.use(express.json());
-
-const PORT = process.env.PORT || 8080;
 
 //Routers
 // import forgotpasswordrouter from "./routers/forgotPasswordRouter.js"
@@ -61,7 +65,19 @@ import assortmentRouter from "./routers/assortmentRouter.js"
 app.use(assortmentRouter);
 
 import taskRouter from "./routers/taskRouter.js"
-app.use(taskRouter)
+app.use(taskRouter);
+
+import editResidentRouter from "./routers/editResidentRouter.js"
+app.use(editResidentRouter);
+
+import editAssortmentRouter from "./routers/editAssortmentRouter.js"
+app.use(editAssortmentRouter);
+
+import adminRouter from "./routers/adminRouter.js"
+app.use(adminRouter);
+
+import laundryRouter from "./routers/laundryRouter.js"
+app.use(laundryRouter);
 
 //Middleware
 const redirectLogin = (req, res, next) => {
@@ -108,6 +124,7 @@ app.get("/api/user", (req, res) => {
 //Restriction for endpoint roles
 app.use("/home", generalLimiter, redirectLogin);
 app.use("/tasks", generalLimiter, redirectLogin)
+app.use("/laundry", generalLimiter, redirectLogin)
 app.use("/admin", generalLimiter, onlyAdmin);
 app.use("/login", generalLimiter, redirectHome);
 app.use("/signup", generalLimiter, redirectHome);
@@ -126,7 +143,7 @@ app.get("/logout", (req, res, next) => {
 //fs is used to read the index.html file in dist folder as a toString, which allows us to use the Router endpoints from svelte
 import fs from "fs"
 const page = fs.readFileSync("../client/dist/index.html").toString()
-app.get(['/home', "/admin", "/login", "/signup", "/forgotpassword", "/residents/:room", "/editassortment", "/editresident", "/tasks"], (req, res) => {
+app.get(["/residents/:room", "/home", "/tasks", "/laundry", "/admin", "/login", "/signup", "/editassortment", "/editresident", "/forgotpassword"], (req, res) => {
   res.send(page)
 });
 
@@ -134,9 +151,11 @@ app.get(("/*"), (req, res) => {
   res.send("<h1>404 page not found</h1>")
 });
 
-const server = app.listen(PORT, (error) => {
-  if (error) {
-    console.log(error)
-  }
-  console.log("Server is running on port", server.address().port)
-})
+io.on('connection', (socket) => {
+  console.log('A user connected');
+  // emit an event to the client
+  socket.emit('user-connected', { message: 'A user has connected' });
+});
+
+const PORT = process.env.PORT || 8080;
+server.listen(PORT, () => console.log("Server is running on port", PORT))

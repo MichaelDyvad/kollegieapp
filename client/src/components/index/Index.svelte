@@ -1,4 +1,5 @@
 <script>
+      import io from "socket.io-client";
       let residentsArray = []
 
       fetch("http://localhost:8080/api/residents")
@@ -7,6 +8,12 @@
             residentsArray = result[0].residents
             console.log(residentsArray)
       })
+
+      const socket = io();
+
+      socket.on('user-connected', (data) => {
+            console.log(data.message);
+      });
 </script>
 
 <h1>Beerfridge</h1>
