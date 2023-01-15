@@ -64,41 +64,41 @@
 {/if}
 
 <style>
-      .green-button{
-        background-color: green;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        text-transform: uppercase;
-        font-size: 13px;
-        -webkit-box-shadow: 0 10px 30px 0 rgba(20, 173, 59, 0.4);
-        box-shadow: 0 10px 30px 0 rgba(20, 173, 59, 0.4);
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-        margin: 5px;
-        transition: all 0.3s ease-in-out;
-}
+      .green-button {
+            background-color: green;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 13px;
+            -webkit-box-shadow: 0 10px 30px 0 rgba(20, 173, 59, 0.4);
+            box-shadow: 0 10px 30px 0 rgba(20, 173, 59, 0.4);
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+            margin: 5px;
+            transition: all 0.3s ease-in-out;
+      }
 
-.red-button{
-  background-color: rgb(207, 23, 23);
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        text-transform: uppercase;
-        font-size: 13px;
-        -webkit-box-shadow: 0 10px 30px 0 rgba(238, 11, 11, 0.4);
-        box-shadow: 0 10px 30px 0 rgba(238, 11, 11, 0.4);
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-        margin: 5px;
-        transition: all 0.3s ease-in-out;
-}
+      .red-button {
+            background-color: rgb(207, 23, 23);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 13px;
+            -webkit-box-shadow: 0 10px 30px 0 rgba(238, 11, 11, 0.4);
+            box-shadow: 0 10px 30px 0 rgba(238, 11, 11, 0.4);
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+            margin: 5px;
+            transition: all 0.3s ease-in-out;
+      }
       .container {
             display: grid;
             text-align: center;
@@ -113,7 +113,8 @@
                   ". . . .";
       }
 
-      a, button {
+      a,
+      button {
             background-color: #56baed;
             width: 35%;
             table-layout: fixed;
@@ -134,12 +135,12 @@
       h1 {
             text-align: center;
       }
-      
-      .div-reset{
+
+      .div-reset {
             text-align: center;
       }
 
-      .modal-buttons{
+      .modal-buttons {
             text-align: center;
       }
 </style>
