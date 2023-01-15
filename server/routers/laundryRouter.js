@@ -16,4 +16,13 @@ router.patch("/api/laundry/:id", async (req, res) => {
     res.redirect("/laundry")
 })
 
+router.patch("/api/laundry", async (req, res) => {
+    console.log("hello")
+    const getLaundry = await db.laundry.find({}).toArray();
+    getLaundry.forEach(laundry => {
+        db.laundry.updateOne({_id: laundry._id}, {$set: {room: ""}})
+    })
+    res.redirect("/laundry")
+})
+
 export default router;

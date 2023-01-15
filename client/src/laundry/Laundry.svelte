@@ -16,6 +16,7 @@
     });
 
   let showModal = false;
+  let showModalReset = false;
   let editRoomValue;
   let laundryId
   function openModal(e){
@@ -24,6 +25,10 @@
     console.log(laundryId)
     showModal = true;
   }
+
+  function openModalReset(e) {
+            showModalReset = true;
+      }
 
   function closeModal() {
         showModal = false;
@@ -39,21 +44,51 @@
                     room: editRoomValue
                 })
             })
-            location.reload()
+            toastr.success("it works")
+            setTimeout(()=> {
+              location.reload()
+            },1300)
       }
+  
+  const patchResetLaundry = async () => {
+        await fetch("/api/laundry", {
+              method: "PATCH",
+              headers: {
+                    "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                    room: "",
+              }),
+        });
+        location.reload();
+  };
 </script>
+
 {#if role === "ADMIN"}
 <div class="reset-div">
-<button on:click={}>Reset laundry scheme</button>
+<button on:click={openModalReset}>Reset laundry scheme</button>
 </div>
 {/if}
+
 <br>
+
+{#if showModalReset}
+  <Modal>
+      <h3>Do you want to reset the laundry scheme?</h3>
+          <div class="modal-buttons">
+                <button class="red-button" on:click={patchResetLaundry}>Yes</button>
+                <button class="green-button" on:click={closeModal}>No</button>
+          </div>
+  </Modal>
+{/if}
+
 <form>
     <div class="container">
       <div class="row">
         <div class="col-sm">
-            <label for="monday">Time</label>
-            <input type="text" id="" name="" value="08:00" readonly>
+            <label for="time">Time</label>
+            <div>
+            <input type="text" id="time" name="" value="08:00" readonly>
             <input type="text" id="" name="" value="09:00" readonly>
             <input type="text" id="" name="" value="10:00" readonly>
             <input type="text" id="" name="" value="11:00" readonly>
@@ -63,6 +98,7 @@
             <input type="text" id="" name="" value="15:00" readonly>
             <input type="text" id="" name="" value="16:00" readonly>
             <input type="text" id="" name="" value="17:00" readonly>
+          </div>
           </div>
           
         <div class="col-sm">
@@ -81,7 +117,7 @@
             {#each laundryArray as laundry}
             <div id="{laundry._id}">
             {#if laundry.day == "tuesday"}
-            <input type="text" id="tuesday" name="{laundry.placement}" value={laundry.room}>
+            <button on:click={openModal} id="tuesday">{laundry.room}</button>
             {/if}
             </div>
             {/each}
@@ -92,7 +128,7 @@
             {#each laundryArray as laundry}
             <div id="{laundry._id}">
             {#if laundry.day == "wednesday"}
-            <input type="text" id="wednesday" name="{laundry.placement}" value={laundry.room}>
+            <button on:click={openModal} id="wednesday">{laundry.room}</button>
             {/if}
             </div>
             {/each}
@@ -103,7 +139,7 @@
             {#each laundryArray as laundry}
             <div id="{laundry._id}">
             {#if laundry.day == "thursday"}
-            <input type="text" id="thursday" name="{laundry.placement}" value={laundry.room}>
+            <button on:click={openModal} id="thursday">{laundry.room}</button>  
             {/if}
             </div>
             {/each}
@@ -114,7 +150,7 @@
             {#each laundryArray as laundry}
             <div id="{laundry._id}">
             {#if laundry.day == "friday"}
-            <input type="text" id="friday" name="{laundry.placement}" value={laundry.room}>
+            <button on:click={openModal} id="friday">{laundry.room}</button>   
             {/if}
             </div>
             {/each}
@@ -125,7 +161,7 @@
             {#each laundryArray as laundry}
             <div id="{laundry._id}">
             {#if laundry.day == "saturday"}
-            <input type="text" id="saturday" name="{laundry.placement}" value={laundry.room}>
+            <button on:click={openModal} id="saturday">{laundry.room}</button>'
             {/if}
             </div>
             {/each}
@@ -136,7 +172,7 @@
             {#each laundryArray as laundry}
             <div id="{laundry._id}">
             {#if laundry.day == "sunday"}
-            <input type="text" id="sunday" name="{laundry.placement}" value={laundry.room}>
+            <button on:click={openModal} id="sunday">{laundry.room}</button>
             {/if}
             </div>
             {/each}
@@ -144,8 +180,6 @@
       </div>
     </div>
   </form>
-
-  
 
   {#if showModal}
     <Modal>
