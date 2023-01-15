@@ -12,6 +12,7 @@ const io = new Server(server);
 
 dotenv.config()
 app.use(express.json())
+
 //Resolves the folder
 app.use(express.static(path.resolve("../client/dist")))
 

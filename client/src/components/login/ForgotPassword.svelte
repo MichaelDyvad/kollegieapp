@@ -1,22 +1,10 @@
 <script>
-  import { toast } from "@zerodevx/svelte-toast";
-
   let message = false;
   fetch("/api/forgotpassword")
     .then((res) => res.json())
     .then((result) => {
       message = result.sent;
     });
-
-  //   function sucess(){
-  //     toast.push("An email has been sent to you", {
-  //   theme: {
-  //     '--toastColor': 'mintcream',
-  //     '--toastBackground': 'rgba(72,187,120,0.9)',
-  //     '--toastBarBackground': '#2F855A'
-  //   }
-  // })
-  //   }
 </script>
 
 <h1>Forgot password</h1>
@@ -31,16 +19,6 @@
     />
     <input type="submit" class="fadeIn fourth" value="submit" />
   </form>
-
-  {#if message === true}
-    {toast.push("An email has been sent to you", {
-      theme: {
-        "--toastColor": "mintcream",
-        "--toastBackground": "rgba(72,187,120,0.9)",
-        "--toastBarBackground": "#2F855A",
-      },
-    })}
-  {/if}
 </div>
 
 <style>

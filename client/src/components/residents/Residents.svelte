@@ -26,7 +26,7 @@
 <div class="container">
       {#each assortmentArray as assortment}
             <div class="assortment">
-                  <form action="/residents/{room}" method="POST">
+                  <form action="/api/residents/{room}" method="POST">
                         <button type="submit" name="option{assortment.option}" value="{assortment.price}">{assortment.type} {assortment.price}kr</button>
                   </form>
             </div>

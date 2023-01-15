@@ -1,5 +1,4 @@
 <script>
-  import { toast } from "@zerodevx/svelte-toast";
 
   let name = "";
   fetch("/api/user")
@@ -35,16 +34,6 @@
   <button on:click={prevImage}>Previous</button>
   <button on:click={nextImage}>Next</button>
 </div>
-
-{#if name}
-  {toast.push(`Welcome ${name}`, {
-    theme: {
-      "--toastColor": "mintcream",
-      "--toastBackground": "rgba(72,187,120,0.9)",
-      "--toastBarBackground": "#2F855A",
-    },
-  })}
-{/if}
 
 <style>
   .slider-container {

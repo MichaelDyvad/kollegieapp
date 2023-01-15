@@ -10,7 +10,6 @@
     import Admin from "./components/admin/Admin.svelte";
     import AdminNavbar from "./components/navbar/AdminNavbar.svelte";
     import Residents from "./components/residents/Residents.svelte";
-    import {SvelteToast} from '@zerodevx/svelte-toast'
     import EditAssortment from "./components/admin/EditAssortment.svelte";
     import EditResident from "./components/admin/EditResident.svelte";
     import Tasks from "./components/tasks/Tasks.svelte";
@@ -103,6 +102,5 @@
         </Route>
 
         <Footer />
-        <SvelteToast />
     </main>
 </Router>

@@ -23,7 +23,6 @@
   function openModal(e) {
     e.preventDefault();
     laundryId = e.target.parentElement.id;
-    console.log(laundryId);
     showModal = true;
   }
 
@@ -45,11 +44,13 @@
       body: JSON.stringify({
         room: editRoomValue,
       }),
-    });
-    toastr.success("it works");
-    setTimeout(() => {
-      location.reload();
-    }, 1300);
+    }).then(res => res.json())
+    .then(result => {
+      const arrayObject = laundryArray.findIndex(laundry => laundry._id === result.laundry._id)
+      laundryArray.splice(arrayObject, 1, result.laundry);
+      laundryArray = [...laundryArray]
+      showModal = false;
+    })
   };
 
   const patchResetLaundry = async () => {
@@ -61,8 +62,12 @@
       body: JSON.stringify({
         room: "",
       }),
-    });
-    location.reload();
+    })
+    .then(res => res.json())
+    .then(result => {
+      laundryArray = result.laundry
+      showModalReset = false;
+    })
   };
 </script>
 <br>

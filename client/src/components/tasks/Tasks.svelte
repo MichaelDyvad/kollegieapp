@@ -1,6 +1,7 @@
 <script>
     import Modal from "../modal/Modal.svelte";
-
+    import { writable } from 'svelte/store';
+    import Admin from "../admin/Admin.svelte";
 
     let name = "";
     fetch("/api/user")
@@ -9,11 +10,11 @@
             name = result.name;
     });
 
-    let tasks = [];
+    let tasksArray = [];
     fetch("/api/tasks")
         .then((res) => res.json())
         .then((result) => {
-            tasks = result[0].tasks;
+            tasksArray = result[0].tasks;
         });
 
     
@@ -32,8 +33,32 @@
         showModal = true;
     }
 
+    function closeModal() {
+        showModal = false;
+    }
+
+    let taskText;
+    const postTask = async () => {
+        await fetch("/api/tasks", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                  task: taskText,
+                  writer: "",
+                  date: ""
+              })
+          })
+          .then(res => res.json())
+          .then(result => {
+            tasksArray = [...tasksArray, result.tasks]
+          })
+    }
+
+
     const patchTask = async () => {
-        await fetch("/tasks/" + taskId, {
+        await fetch("/api/tasks/" + taskId, {
               method: "PATCH",
               headers: {
                   "Content-Type": "application/json"
@@ -42,39 +67,40 @@
                   task: editModalValue
               })
           })
-          location.reload()
+          .then(res => res.json())
+          .then(result => {
+            const arrayObject = tasksArray.findIndex(task => task._id === result.tasks._id)
+            tasksArray.splice(arrayObject, 1, result.tasks);
+            tasksArray = [...tasksArray]
+            showModal = false;
+          })
     }
 
-    function closeModal() {
-        showModal = false;
-    }
     
     const deleteTask = async (e) => {
         e.preventDefault();
         let id = e.target.parentElement.parentElement.id
         console.log(id)
-        await fetch("/tasks/" + id, {
+        await fetch("/api/tasks/" + id, {
             method: "DELETE",
         })
-        location.reload()
+        tasksArray = tasksArray.filter(task => task._id != id)
     };
-
-    
 
 </script>
 
 <h1>Tasks</h1>
 <div class="container-textarea">
-    <form action="/tasks" method="POST">
+    <form on:submit|preventDefault={postTask}>
         <h3>Write your task to property manager here</h3>
-        <textarea name="tasktextarea" class="textarea-add-task" cols="60" rows="5" />
+        <textarea bind:value={taskText} name="tasktextarea" class="textarea-add-task" cols="60" rows="5" />
         <br />
         <button type="submit">Add task</button>
     </form>
 </div>
 <br />
 
-{#each tasks as task}
+{#each tasksArray as task}
     <div class="container" id="{task._id}">
         <div ><p>Writer: {task.writer} <br /> Date: {task.date}</p></div>
         <div>

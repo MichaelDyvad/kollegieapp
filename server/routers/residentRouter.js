@@ -22,7 +22,7 @@ router.get("/api/residents/:room", async (req, res) => {
 })
 
 //Increment bill on resident on room
-router.post("/residents/:room", async (req, res) => {
+router.post("/api/residents/:room", async (req, res) => {
     const room = Number(req.params.room)
     const getResident = await db.residents.find({ room: Number(req.params.room) }).toArray();
     const options = req.body

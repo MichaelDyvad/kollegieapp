@@ -7,37 +7,51 @@ const router = Router();
 
 router.get("/api/tasks", async (req, res) => {
     const getTasks = await db.tasks.find({}).toArray();
-    res.send([{tasks: getTasks}])
+    res.send([{ tasks: getTasks }])
 })
 
 router.get("/api/tasks/:id", async (req, res) => {
     const id = new ObjectId(req.params.id)
-    const getTask = await db.tasks.find({_id: id}).toArray();
-    res.send([{task: getTask}])
+    const getTask = await db.tasks.find({ _id: id }).toArray();
+    res.send([{ task: getTask }])
 })
 
 //Creates a new task
-router.post("/tasks", async (req, res) => {
-    const taskContent = req.body.tasktextarea
-    const date = new Date().toLocaleString("en-GB")
+router.post("/api/tasks", async (req, res) => {
+    const task = req.body
+    task.date = new Date().toLocaleString("en-GB")
+    task.writer = req.session.name
 
-    await db.tasks.insertOne({task: taskContent, date: String(date) , writer: req.session.name})
-    res.redirect("/tasks")
+    try {
+        await db.tasks.insertOne(task)
+        res.status(200).send({ tasks: task })
+    } catch (error) {
+        res.status(500).send({ error })
+    }
 })
 
 //Updates the task in tasks
-router.patch("/tasks/:id", async (req, res) => {
+router.patch("/api/tasks/:id", async (req, res) => {
     const id = new ObjectId(req.params.id)
     const updateObject = req.body
-    await db.tasks.updateOne({ _id: id }, { $set: updateObject})
-    res.redirect("/tasks")
+    try {
+        await db.tasks.updateOne({ _id: id }, { $set: updateObject })
+        const updatedTask = await db.tasks.findOne({ _id: id })
+        res.status(200).send({ tasks: updatedTask })
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 })
 
 //Deletes task on id
-router.delete("/tasks/:id", async (req, res) => {
+router.delete("/api/tasks/:id", async (req, res) => {
     const id = new ObjectId(req.params.id)
-    await db.tasks.deleteOne({_id: id})
-    res.redirect("/tasks")
+    try {
+        await db.tasks.deleteOne({ _id: id })
+        res.status(200).send({ message: "deleted" })
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 })
 
 export default router

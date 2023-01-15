@@ -18,10 +18,15 @@ router.get("/api/bills", async (req, res) => {
 
 router.patch("/api/bills", async (req, res) => {
     const getResident = await db.residents.find({}).toArray();
-    getResident.forEach(resident => {
-        db.residents.updateOne({room: resident.room}, {$set: {bill: 0}})
+    const bill = {bill: 0}
+    try{
+        getResident.forEach(resident => {
+        db.residents.updateOne({room: resident.room}, {$set: bill})
     })
-    res.redirect("/admin")
+        res.status(200).send({bills: bill})
+    }catch(error){
+        res.status(500).send({error})
+    }
 })
 
 

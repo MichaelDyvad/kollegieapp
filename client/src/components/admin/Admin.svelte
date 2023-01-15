@@ -1,7 +1,7 @@
 <script>
       import Modal from "../modal/Modal.svelte";
+      
       let residentsArray = [];
-
       fetch("/api/residents")
             .then((res) => res.json())
             .then((result) => {
@@ -9,7 +9,6 @@
             });
 
       let bill = [];
-
       fetch("/api/bills")
             .then((res) => res.json())
             .then((result) => {
@@ -17,9 +16,10 @@
             });
 
       let showModal = false;
-      function openModal(e) {
+      function openModal() {
             showModal = true;
       }
+
       function closeModal() {
             showModal = false;
       }
@@ -33,8 +33,14 @@
                   body: JSON.stringify({
                         bill: 0,
                   }),
-            });
-            location.reload();
+            })
+            // .then(res => {
+            //       res.json()
+            // })
+            // .then(data => {
+            //       console.log(data[0].residents)
+            //       residentsArray = [...residentsArray, data.residents]
+            // })
       };
 </script>
 
