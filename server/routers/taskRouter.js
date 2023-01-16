@@ -26,7 +26,7 @@ router.post("/api/tasks", async (req, res) => {
         await db.tasks.insertOne(task)
         res.status(200).send({ tasks: task })
     } catch (error) {
-        res.status(500).send({ error })
+        res.status(500).send({ message: error.message });
     }
 })
 
@@ -39,7 +39,7 @@ router.patch("/api/tasks/:id", async (req, res) => {
         const updatedTask = await db.tasks.findOne({ _id: id })
         res.status(200).send({ tasks: updatedTask })
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).send({ message: error.message });
     }
 })
 
@@ -50,7 +50,7 @@ router.delete("/api/tasks/:id", async (req, res) => {
         await db.tasks.deleteOne({ _id: id })
         res.status(200).send({ message: "deleted" })
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).send({ message: error.message });
     }
 })
 

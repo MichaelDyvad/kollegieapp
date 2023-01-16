@@ -52,6 +52,7 @@
           .then(result => {
             tasksArray = [...tasksArray, result.tasks]
           })
+          taskText = ""
     }
 
 
