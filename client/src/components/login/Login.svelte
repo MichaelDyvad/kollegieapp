@@ -11,16 +11,10 @@
         
       <!-- Login Form -->
       <form action="/login" method="POST">
-        <input type="text" id="login-email" class="fadeIn second" name="residentname" placeholder="name" required>
-        <input type="password" id="login-password" class="fadeIn third" name="password" placeholder="password" required>
+        <input type="text" id="email" class="fadeIn second" name="name" placeholder="name" required>
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" required>
         <input type="submit" class="fadeIn fourth" value="Log In">
       </form>
-  
-
-      <!-- Forgot Passowrd -->
-    <div id="formFooter">
-        <a class="underlineHover" href="/forgotpassword">Forgot Password?</a>
-    </div>
     </div>
   </div>
 

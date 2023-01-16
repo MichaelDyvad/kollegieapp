@@ -5,7 +5,6 @@
     import Index from "./components/index/Index.svelte";
     import Login from "./components/login/Login.svelte";
     import Signup from "./components/login/Signup.svelte"
-    import ForgotPassword from "./components/login/ForgotPassword.svelte"
     import Home from "./components/home/Home.svelte"
     import Admin from "./components/admin/Admin.svelte";
     import AdminNavbar from "./components/navbar/AdminNavbar.svelte";
@@ -94,11 +93,6 @@
         <Route path="/admin">
             <AdminNavbar />
             <Admin />
-        </Route>
-
-        <Route path="/forgotpassword">
-            <Navbar />
-            <ForgotPassword />
         </Route>
 
         <Footer />

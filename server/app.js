@@ -53,9 +53,6 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 //Routers
-// import forgotpasswordrouter from "./routers/forgotPasswordRouter.js"
-// app.use(forgotpasswordrouter)
-
 import authRouter from "./routers/authRouter.js"
 app.use(authRouter);
 
@@ -133,6 +130,8 @@ app.use("/forgotpassword", generalLimiter);
 app.use("/editassortment", generalLimiter, onlyAdmin)
 app.use("/editresident", generalLimiter, onlyAdmin)
 
+const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+io.use(wrap(sessionMiddleware));
 
 //Logout to destroy session, so that you can login again
 app.get("/logout", (req, res, next) => {

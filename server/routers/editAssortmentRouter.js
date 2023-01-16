@@ -34,7 +34,7 @@ router.delete("/api/editassortment/:id", async (req, res) => {
     const id = new ObjectId(req.params.id)
     try{
         await db.assortment.deleteOne({ _id: id })
-        res.status(200).send({ message: "deleted" })
+        res.status(200).send({message: "success"})
     }catch(error){
         res.status(500).send({ message: error.message });
     }
