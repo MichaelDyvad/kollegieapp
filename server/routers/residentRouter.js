@@ -26,7 +26,6 @@ router.patch("/api/residents/:room", async (req, res) => {
     const room = Number(req.params.room)
     const getResident = await db.residents.find({ room: Number(req.params.room) }).toArray();
     const options = req.body
-    console.log(options)
     const optionValue = Object.values(options)
 
     const currentResidentBill = getResident[0].bill

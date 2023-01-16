@@ -34,13 +34,12 @@
                         bill: 0,
                   }),
             })
-            // .then(res => {
-            //       res.json()
-            // })
-            // .then(data => {
-            //       console.log(data[0].residents)
-            //       residentsArray = [...residentsArray, data.residents]
-            // })
+            .then(res => res.json())
+            .then(result => {
+                  residentsArray = result.bills
+                  bill.summedBills = 0
+                  showModal = false;
+            })
       };
 </script>
 

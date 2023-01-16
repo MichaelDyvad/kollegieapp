@@ -23,7 +23,8 @@ router.patch("/api/bills", async (req, res) => {
         getResident.forEach(resident => {
         db.residents.updateOne({room: resident.room}, {$set: bill})
     })
-        res.status(200).send({bills: bill})
+    const updatedBills = await db.residents.find({}).toArray()
+        res.status(200).send({bills: updatedBills})
     }catch(error){
         res.status(500).send({error})
     }
