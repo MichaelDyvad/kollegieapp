@@ -94,7 +94,7 @@
       <div class="col-sm">
         <label for="monday">Monday</label>
         {#each laundryArray as laundry}
-          <div id={laundry._id}>
+          <div class="laundry-div" id={laundry._id}>
             {#if laundry.day == "monday"}
               <button class="main-button" on:click={openModal} id="monday">{laundry.room}</button>
             {/if}
@@ -105,7 +105,7 @@
       <div class="col-sm">
         <label for="tuesday">Tuesday</label>
         {#each laundryArray as laundry}
-          <div id={laundry._id}>
+          <div class="laundry-div" id={laundry._id}>
             {#if laundry.day == "tuesday"}
               <button class="main-button" on:click={openModal} id="tuesday">{laundry.room}</button>
             {/if}
@@ -116,7 +116,7 @@
       <div class="col-sm">
         <label for="wednesday">Wednesday</label>
         {#each laundryArray as laundry}
-          <div id={laundry._id}>
+          <div class="laundry-div" id={laundry._id}>
             {#if laundry.day == "wednesday"}
               <button class="main-button" on:click={openModal} id="wednesday">{laundry.room}</button
               >
@@ -128,7 +128,7 @@
       <div class="col-sm">
         <label for="thursday">Thursday</label>
         {#each laundryArray as laundry}
-          <div id={laundry._id}>
+          <div class="laundry-div" id={laundry._id}>
             {#if laundry.day == "thursday"}
               <button class="main-button" on:click={openModal} id="thursday">{laundry.room}</button>
             {/if}
@@ -139,7 +139,7 @@
       <div class="col-sm">
         <label for="friday">Friday</label>
         {#each laundryArray as laundry}
-          <div id={laundry._id}>
+          <div class="laundry-div" id={laundry._id}>
             {#if laundry.day == "friday"}
               <button class="main-button" on:click={openModal} id="friday">{laundry.room}</button>
             {/if}
@@ -150,10 +150,9 @@
       <div class="col-sm">
         <label for="saturday">Saturday</label>
         {#each laundryArray as laundry}
-          <div id={laundry._id}>
+          <div class="laundry-div" id={laundry._id}>
             {#if laundry.day == "saturday"}
-              <button class="main-button" on:click={openModal} id="saturday">{laundry.room}</button
-              >'
+              <button class="main-button" on:click={openModal} id="saturday">{laundry.room}</button>
             {/if}
           </div>
         {/each}
@@ -162,7 +161,7 @@
       <div class="col-sm">
         <label for="sunday">Sunday</label>
         {#each laundryArray as laundry}
-          <div id={laundry._id}>
+          <div class="laundry-div" id={laundry._id}>
             {#if laundry.day == "sunday"}
               <button class="main-button" on:click={openModal} id="sunday">{laundry.room}</button>
             {/if}
@@ -220,9 +219,14 @@
     display: flex;
   }
 
+  .laundry-div{
+    margin-left: 1px;
+    margin-right: 1px;
+  }
   .col-sm {
     flex: 1;
     text-align: center;
+    border-color: aqua;
   }
 
   label {

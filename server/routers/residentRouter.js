@@ -22,21 +22,23 @@ router.get("/api/residents/:room", async (req, res) => {
 })
 
 //Increment bill on resident on room
-router.post("/api/residents/:room", async (req, res) => {
+router.patch("/api/residents/:room", async (req, res) => {
     const room = Number(req.params.room)
     const getResident = await db.residents.find({ room: Number(req.params.room) }).toArray();
     const options = req.body
+    console.log(options)
     const optionValue = Object.values(options)
 
     const currentResidentBill = getResident[0].bill
     const incrementBill = Number((currentResidentBill)) + (Number(optionValue))
-
-    await db.residents.updateOne({ room: room }, 
-        { 
-            $set: { bill: incrementBill } 
-        });
-
-    res.redirect("/residents/" + room)
+    try{
+        await db.residents.updateOne({ room: room }, { $set: { bill: incrementBill } });
+        const updatedResident = await db.residents.findOne({room: room})
+        res.status(200).send({resident: updatedResident})
+    }catch(error){
+        res.status(500).send(error);
+    }
+    
 
 })
 

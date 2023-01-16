@@ -1,7 +1,5 @@
 <script>
     import Modal from "../modal/Modal.svelte";
-    import { writable } from 'svelte/store';
-    import Admin from "../admin/Admin.svelte";
 
     let name = "";
     fetch("/api/user")

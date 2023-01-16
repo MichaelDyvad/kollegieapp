@@ -1,38 +1,53 @@
 <script>
       const room = window.location.pathname.split("/").pop();
 
-      let residents = [];
+      let residentArray = [];
       fetch("/api/residents/" + room)
             .then((res) => res.json())
             .then((result) => {
-                  residents = result[0].resident;
-                  console.log(residents)
+                  residentArray = result[0].resident;
             });
 
       let assortmentArray = [];
       fetch("/api/assortment")
-      .then(res => res.json())
-      .then(result => {
-            assortmentArray = result[0].assortment
-      })
+            .then((res) => res.json())
+            .then((result) => {
+                  assortmentArray = result[0].assortment;
+            });
 
+      const patchResident = async (e) => {
+            let price = e.target.querySelector(".child").id;
+            await fetch("/api/residents/" + room, {
+                  method: "PATCH",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                        price: price,
+                  }),
+            })
+                  .then((res) => res.json())
+                  .then((result) => {
+                        residentArray = [result.resident];
+                  });
+      };
 </script>
-<br>
+
+<br />
 <a href="/">Gå tilbage</a>
-{#each residents as resident}
-<h1>{resident.room} : {resident.name}</h1>
-<h1>REGNING: {resident.bill}kr</h1>
+{#each residentArray as resident}
+      <h1>{resident.room} : {resident.name}</h1>
+      <h1>REGNING: {resident.bill}kr</h1>
 {/each}
 <div class="container">
       {#each assortmentArray as assortment}
             <div class="assortment">
-                  <form action="/api/residents/{room}" method="POST">
-                        <button type="submit" name="option{assortment.option}" value="{assortment.price}">{assortment.type} {assortment.price}kr</button>
+                  <form on:submit|preventDefault={patchResident}>
+                        <button class="child"  type="submit" id={assortment.price} name="option{assortment.option}">{assortment.type} {assortment.price}kr</button>
                   </form>
             </div>
       {/each}
 </div>
-
 
 <style>
       .container {
@@ -71,7 +86,7 @@
             transition: all 0.3s ease-in-out;
       }
 
-      a{
+      a {
             background-color: #56baed;
             width: 10%;
             table-layout: fixed;
