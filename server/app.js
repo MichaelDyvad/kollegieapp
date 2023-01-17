@@ -100,7 +100,6 @@ const onlyAdmin = (req, res, next) => {
 //Restriction for endpoint roles
 app.use("/home", generalLimiter, redirectLogin);
 app.use("/tasks", generalLimiter, redirectLogin);
-// app.use("/laundry", generalLimiter, redirectLogin);
 app.use("/admin", generalLimiter, onlyAdmin);
 app.use("/login", generalLimiter, redirectHome);
 app.use("/signup", generalLimiter, redirectHome);

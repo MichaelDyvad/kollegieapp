@@ -14,9 +14,6 @@ router.get("/api/laundry", async (req, res) => {
 router.patch("/api/laundry/:id", async (req, res) => {
     const id = new ObjectId(req.params.id)
     const updateObject = req.body
-    // if (!req.session.role) {
-    //     res.status(401).send({ message: "not session" })
-    // } else {
         try {
             await db.laundry.updateOne({ _id: id }, { $set: updateObject })
             const updatedLaundry = await db.laundry.findOne({ _id: id })
@@ -24,7 +21,6 @@ router.patch("/api/laundry/:id", async (req, res) => {
         } catch (error) {
             res.status(500).send({ message: error.message });
         }
-    // }
 })
 
 //Adds to the laundry scheme
