@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 const router = Router()
 
 //Edit the whole entity of the resident
-router.patch("/editresident/:room", async (req, res) => {
+router.patch("/api/editresident/:room", async (req, res) => {
     if(!req.session.role){
         res.status(401).send({message: "not session"})
     }else{
@@ -33,7 +33,7 @@ router.patch("/editresident/:room", async (req, res) => {
 })
 
 //Delets resident on room
-router.delete("/editresident/:room", async (req, res) => {
+router.delete("/api/editresident/:room", async (req, res) => {
     if(!req.session.role){
         res.status(401).send({message: "not session"})
     }else{
