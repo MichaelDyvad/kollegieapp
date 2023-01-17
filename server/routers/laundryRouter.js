@@ -20,7 +20,7 @@ router.patch("/api/laundry/:id", async (req, res) => {
         const updatedLaundry = await db.laundry.findOne({ _id: id })
         res.status(200).send({ laundry: updatedLaundry })
     } catch (error) {
-        res.status(500).send({ error })
+        res.status(500).send({ message: error.message });
     }}
 
 })
@@ -37,7 +37,7 @@ router.patch("/api/laundry", async (req, res) => {
         const updatedLaundry = await db.laundry.find({}).toArray()
         res.status(200).send({laundry: updatedLaundry})
     } catch (error) {
-        res.status(500).send({ error })
+        res.status(500).send({ message: error.message });
     }}
 })
 

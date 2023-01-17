@@ -35,7 +35,7 @@ router.patch("/api/residents/:room", async (req, res) => {
         const updatedResident = await db.residents.findOne({room: room})
         res.status(200).send({resident: updatedResident})
     }catch(error){
-        res.status(500).send(error);
+        res.status(500).send({ message: error.message });
     }
 })
 

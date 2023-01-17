@@ -21,10 +21,9 @@ router.post("/api/tasks", async (req, res) => {
     if(!req.session.role){
         res.status(401).send({message: "not session"})
     }else{
-        const task = req.body
+    const task = req.body
     task.date = new Date().toLocaleString("en-GB")
     task.writer = req.session.name
-
     try {
         await db.tasks.insertOne(task)
         res.status(200).send({ tasks: task })

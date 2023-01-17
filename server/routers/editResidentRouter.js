@@ -28,7 +28,7 @@ router.patch("/api/editresident/:room", async (req, res) => {
         res.status(200).send({resident: updatedResident})
     }
     }catch(error){
-        res.status(500).send({ error })
+        res.status(500).send({ message: error.message });
     }}
 })
 
