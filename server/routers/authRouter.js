@@ -11,16 +11,17 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPassword
     newUser.role = "USER"
+    newUser.bill = 0
     const role = "USER"
 
     let nameExist = await db.residents.find({name: newUser.name}).toArray()
     if(nameExist != 0){
-      res.redirect("/signup")
+      res.status(500).send({message: "Signup failed"})
     }else{
       db.residents.insertOne(newUser)
       req.session.role = role
       req.session.name = newUser.name
-      res.redirect("/admin")
+      res.status(200).send({message: "Signup success"})
     }
   })
 
@@ -33,11 +34,10 @@ router.post("/signup", async (req, res) => {
         const sessionUserRole = dbName[0].role
         req.session.role = sessionUserRole
         req.session.name = user.name
-        res.redirect("/admin")
+        res.status(200).send({message: "Login success"})
       }
     }catch (error){
-      console.log(error)
-      res.redirect("/login")
+      res.status(500).send({message: "login failed"})
     }   
   })
 

@@ -18,7 +18,10 @@ router.get("/api/tasks/:id", async (req, res) => {
 
 //Creates a new task
 router.post("/api/tasks", async (req, res) => {
-    const task = req.body
+    if(!req.session.role){
+        res.status(401).send({message: "not session"})
+    }else{
+        const task = req.body
     task.date = new Date().toLocaleString("en-GB")
     task.writer = req.session.name
 
@@ -28,10 +31,15 @@ router.post("/api/tasks", async (req, res) => {
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
+    }
+    
 })
 
 //Updates the task in tasks
 router.patch("/api/tasks/:id", async (req, res) => {
+    if(!req.session.role){
+        res.status(401).send({message: "not session"})
+    }else{
     const id = new ObjectId(req.params.id)
     const updateObject = req.body
     try {
@@ -41,10 +49,14 @@ router.patch("/api/tasks/:id", async (req, res) => {
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
+}
 })
 
 //Deletes task on id
 router.delete("/api/tasks/:id", async (req, res) => {
+    if(!req.session.role){
+        res.status(401).send({message: "not session"})
+    }else{
     const id = new ObjectId(req.params.id)
     try {
         await db.tasks.deleteOne({ _id: id })
@@ -52,6 +64,7 @@ router.delete("/api/tasks/:id", async (req, res) => {
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
+}
 })
 
 export default router

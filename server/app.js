@@ -80,7 +80,6 @@ app.use(laundryRouter);
 //Middleware
 const redirectLogin = (req, res, next) => {
   if (!req.session.role) {
-    console.log("jeg er ikke i session")
     res.redirect("/login")
   } else {
     next()
@@ -122,7 +121,7 @@ app.get("/api/user", (req, res) => {
 //Restriction for endpoint roles
 app.use("/home", generalLimiter, redirectLogin);
 app.use("/tasks", generalLimiter, redirectLogin)
-app.use("/laundry", generalLimiter, redirectLogin)
+// app.use("/laundry", generalLimiter, redirectLogin)
 app.use("/admin", generalLimiter, onlyAdmin);
 app.use("/login", generalLimiter, redirectHome);
 app.use("/signup", generalLimiter, redirectHome);
@@ -130,13 +129,9 @@ app.use("/forgotpassword", generalLimiter);
 app.use("/editassortment", generalLimiter, onlyAdmin)
 app.use("/editresident", generalLimiter, onlyAdmin)
 
-const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
-io.use(wrap(sessionMiddleware));
-
 //Logout to destroy session, so that you can login again
 app.get("/logout", (req, res, next) => {
   req.session.destroy();
-  console.log("Session detroyed")
   res.redirect("/login")
 })
 
@@ -151,10 +146,23 @@ app.get(("/*"), (req, res) => {
   res.send("<h1>404 page not found</h1>")
 });
 
-io.on('connection', (socket) => {
-  console.log('A user connected');
-  // emit an event to the client
-  socket.emit('user-connected', { message: 'A user has connected' });
+let increment = 0;
+io.on("connection", (socket) => {
+  console.log("A user connected");
+  socket.on("open-modal", (data) => {
+    if (data === true) {
+      increment++;
+      console.log(increment)
+    }
+    if (increment > 1) {
+      socket.emit("close-modal", true);
+      increment--;
+    }
+  });
+  socket.on("leave-modal", (data) => {
+    increment - data;
+  });
+  console.log(increment)
 });
 
 const PORT = process.env.PORT || 8080;

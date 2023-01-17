@@ -7,6 +7,9 @@ const router = Router()
 
 //Edit the whole entity of the resident
 router.patch("/editresident/:room", async (req, res) => {
+    if(!req.session.role){
+        res.status(401).send({message: "not session"})
+    }else{
     const room = Number(req.params.room)
     const updateObject = req.body
     try{
@@ -26,18 +29,21 @@ router.patch("/editresident/:room", async (req, res) => {
     }
     }catch(error){
         res.status(500).send({ error })
-    }
+    }}
 })
 
 //Delets resident on room
 router.delete("/editresident/:room", async (req, res) => {
+    if(!req.session.role){
+        res.status(401).send({message: "not session"})
+    }else{
     const room = Number(req.params.room)
     try{
         await db.residents.deleteOne({room: room})
         res.status(200).send({})
     }catch(error){
         res.status(500).send({ message: error.message });
-    }
+    }}
 })
 
 export default router;

@@ -12,17 +12,23 @@ router.get("/api/laundry", async (req, res) => {
 router.patch("/api/laundry/:id", async (req, res) => {
     const id = new ObjectId(req.params.id)
     const updateObject = req.body
+    if(!req.session.role){
+        res.status(401).send({message: "not session"})
+    }else{
     try {
         await db.laundry.updateOne({ _id: id }, { $set: updateObject })
         const updatedLaundry = await db.laundry.findOne({ _id: id })
         res.status(200).send({ laundry: updatedLaundry })
     } catch (error) {
         res.status(500).send({ error })
-    }
+    }}
 
 })
 
 router.patch("/api/laundry", async (req, res) => {
+    if(!req.session.role){
+        res.status(401).send({message: "not session"})
+    }else{
     try {
         const getLaundry = await db.laundry.find({}).toArray();
         getLaundry.forEach(laundry => {
@@ -32,8 +38,7 @@ router.patch("/api/laundry", async (req, res) => {
         res.status(200).send({laundry: updatedLaundry})
     } catch (error) {
         res.status(500).send({ error })
-    }
-
+    }}
 })
 
 export default router;

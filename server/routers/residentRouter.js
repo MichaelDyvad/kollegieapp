@@ -37,8 +37,6 @@ router.patch("/api/residents/:room", async (req, res) => {
     }catch(error){
         res.status(500).send(error);
     }
-    
-
 })
 
 export default router;
