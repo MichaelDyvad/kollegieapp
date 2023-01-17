@@ -12,7 +12,7 @@
     import EditAssortment from "./components/admin/EditAssortment.svelte";
     import EditResident from "./components/admin/EditResident.svelte";
     import Tasks from "./components/tasks/Tasks.svelte";
-    import Laundry from "./laundry/Laundry.svelte";
+    import Laundry from "./components/laundry/Laundry.svelte";
     
     let role = ""
     fetch("/api/isadmin")

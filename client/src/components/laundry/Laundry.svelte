@@ -1,7 +1,7 @@
 <script>
   import io from "socket.io-client";
 
-  import Modal from "../components/modal/Modal.svelte";
+  import Modal from "../modal/Modal.svelte";
 
   let laundryArray = [];
   fetch("/api/laundry")
