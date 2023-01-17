@@ -1,5 +1,32 @@
 <script>
-
+  let signupName;
+  let email;
+  let password;
+  let room;
+  const postSignup = async () => {
+        await fetch("/signup", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                  name: signupName,
+                  email: email,
+                  password: password,
+                  room: room
+              })
+          }).then(res => {
+                if (res.status !== 200) {
+                    toastr.error("Signup failed")
+                    location.href = "/signup"
+                } else if (res.status) {
+                    setTimeout(() => {
+                        location.href = "/admin"
+                    }, 1500)
+                    toastr.success("Signup succeded, redirecting")
+                }
+            })
+    }
 </script>
 
 <h1>Sign-up</h1>
@@ -10,11 +37,11 @@
       <a href="/signup" class="inactive underlineHover">Sign Up </a>
         
       <!-- singup Form -->
-      <form action="/signup" method="POST">
-        <input type="text" id="residentname" class="fadeIn second" name="name" placeholder="residentname" required>
-        <input type="email" id="email" class="fadeIn second" name="email" placeholder="email" required>
-        <input type="text" id="password" class="fadeIn third" name="password" placeholder="password" required>
-        <input type="text" id="room" class="fadeIn third" name="room" placeholder="room" required>
+      <form on:submit|preventDefault={postSignup}>
+        <input type="text" class="fadeIn second" name="name" placeholder="residentname" bind:value={signupName} required>
+        <input type="email" class="fadeIn second" name="email" placeholder="email" bind:value={email} required>
+        <input type="text" class="fadeIn third" name="password" placeholder="password" bind:value={password} required>
+        <input type="text" class="fadeIn third" name="room" placeholder="room" bind:value={room} required>
         <input type="submit" id="signup-btn" class="fadeIn fourth" value="Sign-up">
       </form>
     </div>

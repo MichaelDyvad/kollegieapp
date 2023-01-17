@@ -79,7 +79,6 @@
     const deleteTask = async (e) => {
         e.preventDefault();
         let id = e.target.parentElement.parentElement.id
-        console.log(id)
         await fetch("/api/tasks/" + id, {
             method: "DELETE",
         })

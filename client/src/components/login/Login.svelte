@@ -1,7 +1,28 @@
 <script>
-  
+  let loginName;
+  let password;
+  const postLogin = async () => {
+        await fetch("/login", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                  name: loginName,
+                  password: password
+              })
+          }).then(res => {
+                if (res.status !== 200) {
+                    toastr.error("Login failed, name or password is wrong")
+                } else if (res.status) {
+                    setTimeout(() => {
+                        location.href = "/admin"
+                    }, 1500)
+                    toastr.success("Login succeded, redirecting")
+                }
+            })
+    }
 </script>
-
 <h1>Login</h1>
 <div class="wrapper fadeInDown">
     <div id="formContent">
@@ -10,9 +31,9 @@
       <a href="/signup" class="inactive underlineHover">Sign Up </a>
         
       <!-- Login Form -->
-      <form action="/login" method="POST">
-        <input type="text" id="email" class="fadeIn second" name="name" placeholder="name" required>
-        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" required>
+      <form on:submit|preventDefault={postLogin}>
+        <input type="text" class="fadeIn second" name="name" placeholder="name" bind:value={loginName} required>
+        <input type="password" class="fadeIn third" name="password" placeholder="password" bind:value={password} required>
         <input type="submit" class="fadeIn fourth" value="Log In">
       </form>
     </div>

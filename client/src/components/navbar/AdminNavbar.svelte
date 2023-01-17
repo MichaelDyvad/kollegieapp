@@ -17,9 +17,9 @@
 
 <ul>
   <li><a href="/">Beerfridge</a></li>
+  <li><a href="/laundry">Laundry</a></li>
   <li><a href="/home">Home</a></li>
   <li><a href="/tasks">Tasks</a></li>
-  <li><a href="/laundry">Laundry</a></li>
   <li><a href="/admin">Admin</a></li>
 
 

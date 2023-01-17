@@ -1,4 +1,6 @@
 <script>
+  import io from "socket.io-client";
+
   import Modal from "../components/modal/Modal.svelte";
 
   let laundryArray = [];
@@ -17,16 +19,29 @@
 
   let showModal = false;
   let showModalReset = false;
-  let editRoomValue;
   let laundryId;
+
+  let socket = io();
+  let activeUsers = 0;
+  socket.on("users-connected", (data) => {
+            activeUsers = data.message;
+      });
+
+      socket.on("disconnect", () => {
+            activeUsers--;
+      });
 
   function openModal(e) {
     e.preventDefault();
     laundryId = e.target.parentElement.id;
-    showModal = true;
+    if(activeUsers > 2){
+      showModal = false
+    }else{
+      showModal = true;
+    }
   }
 
-  function openModalReset(e) {
+  function openModalReset() {
     showModalReset = true;
   }
 
@@ -35,6 +50,7 @@
     showModalReset = false;
   }
 
+  let editRoomValue;
   const patchLaundry = async () => {
     await fetch("/api/laundry/" + laundryId, {
       method: "PATCH",
@@ -71,7 +87,8 @@
   };
 </script>
 <br>
-
+<h1>Laundry scheme</h1>
+<h1>Users active {activeUsers}</h1>
 <form>
   <div class="container">
     <div class="row">
@@ -214,11 +231,9 @@
   .container {
     width: 100%;
   }
-
   .row {
     display: flex;
   }
-
   .laundry-div{
     margin-left: 1px;
     margin-right: 1px;
@@ -228,11 +243,9 @@
     text-align: center;
     border-color: aqua;
   }
-
   label {
     font-weight: bold;
   }
-
   input {
     width: 8em;
     height: 3em;
@@ -244,7 +257,6 @@
     text-align: center;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   }
-
   .main-button {
     width: 8em;
     height: 3em;
@@ -255,7 +267,6 @@
     text-align: center;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   }
-
   .green-button {
             background-color: green;
             border: none;
@@ -273,7 +284,6 @@
             margin: 5px;
             transition: all 0.3s ease-in-out;
       }
-
   .red-button {
             background-color: rgb(207, 23, 23);
             border: none;
@@ -291,27 +301,21 @@
             margin: 5px;
             transition: all 0.3s ease-in-out;
       }
-
   .input-div{
     text-align: center;
   }
-
   label {
     color: antiquewhite;
   }
-
   .reset-div {
     text-align: center;
   }
-
   h3 {
     color: #56baed;
   }
-
   h1{
     text-align: center;
   }
-
   .modal-buttons {
     text-align: center;
   }

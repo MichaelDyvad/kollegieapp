@@ -11,6 +11,7 @@ router.post("/signup", async (req, res) => {
   newUser.password = hashedPassword
   newUser.role = "USER"
   newUser.bill = 0
+  newUser.room = Number(newUser.room)
   const role = "USER"
 
   let nameExist = await db.residents.find({ name: newUser.name }).toArray()

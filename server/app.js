@@ -100,14 +100,14 @@ const onlyAdmin = (req, res, next) => {
 
 //Restriction for endpoint roles
 app.use("/home", generalLimiter, redirectLogin);
-app.use("/tasks", generalLimiter, redirectLogin)
-app.use("/laundry", generalLimiter, redirectLogin)
+app.use("/tasks", generalLimiter, redirectLogin);
+// app.use("/laundry", generalLimiter, redirectLogin);
 app.use("/admin", generalLimiter, onlyAdmin);
 app.use("/login", generalLimiter, redirectHome);
 app.use("/signup", generalLimiter, redirectHome);
 app.use("/forgotpassword", generalLimiter);
-app.use("/editassortment", generalLimiter, onlyAdmin)
-app.use("/editresident", generalLimiter, onlyAdmin)
+app.use("/editassortment", generalLimiter, onlyAdmin);
+app.use("/editresident", generalLimiter, onlyAdmin);
 
 //Logout to destroy session, so that you can login again
 app.get("/logout", (req, res, next) => {
@@ -127,23 +127,14 @@ app.get(("/*"), (req, res) => {
   res.send("<h1>404 page not found</h1>")
 });
 
-let increment = 0;
-io.on("connection", (socket) => {
-  console.log("A user connected");
-  socket.on("open-modal", (data) => {
-    if (data === true) {
-      increment++;
-      console.log(increment)
-    }
-    if (increment > 1) {
-      socket.emit("close-modal", true);
-      increment--;
-    }
-  });
-  socket.on("leave-modal", (data) => {
-    increment - data;
-  });
-  console.log(increment)
+let activeUsers = 0;
+
+io.on('connection', (socket) => {
+    activeUsers++;
+    socket.on("disconnect", () => {
+        activeUsers--;
+    });
+    io.emit("users-connected", { message: activeUsers });
 });
 
 const PORT = process.env.PORT || 8080;

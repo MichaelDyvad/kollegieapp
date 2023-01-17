@@ -5,7 +5,6 @@
         .then((res) => res.json())
         .then((result) => {
             residentsArray = result[0].residents;
-            console
         });
     
     
@@ -16,7 +15,7 @@
     let password;
     let bill;
     const patchResident = async () => {
-          await fetch("/editresident/" + selected.room, {
+          await fetch("/api/editresident/" + selected.room, {
               method: "PATCH",
               headers: {
                   "Content-Type": "application/json"
@@ -31,7 +30,6 @@
           }).then(res => res.json())
           .then(result => {
             const arrayObject = residentsArray.findIndex(resident => resident.id === result.resident._id)
-            console.log(arrayObject)
             residentsArray.splice(arrayObject, 1, result.resident);
             residentsArray = [...residentsArray]
           })
@@ -40,7 +38,7 @@
 
     let selectedDelete;
     const deleteResident = async () => {
-        await fetch("/editresident/" + selectedDelete.room, {
+        await fetch("/api/editresident/" + selectedDelete.room, {
             method: "DELETE"
         })
         residentsArray = residentsArray.filter(resident => resident.room != selectedDelete.room)

@@ -46,9 +46,7 @@
               })
           }).then(res => res.json())
           .then(result => {
-            console.log(result)
             const arrayObject = assortmentArray.findIndex(assortment => assortment._id === result.assortment._id)
-            console.log(arrayObject)
             assortmentArray.splice(arrayObject, 1, result.assortment);
             assortmentArray = [...assortmentArray]
           })
@@ -61,8 +59,6 @@
         await fetch("/api/editassortment/" + selectedDelete._id, {
             method: "DELETE"
         })
-        console.log(selectedDelete._id)
-        console.log(assortmentArray)
 
         assortmentArray = assortmentArray.filter(assortment => assortment._id != selectedDelete._id)
         toastr.success(selectedDelete.type + " deleted")
