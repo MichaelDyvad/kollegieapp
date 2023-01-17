@@ -15,9 +15,15 @@ router.get("/api/residents", async (req, res) => {
 
 //Gets one resident on room
 router.get("/api/residents/:room", async (req, res) => {
-    const getResident = await db.residents.find({ room: Number(req.params.room) }).toArray();
-    const residentModified = [{ id: getResident[0]._id, name: getResident[0].name, email: getResident[0].email, room: getResident[0].room, bill: getResident[0].bill, role: getResident[0].role }]
-    res.send([{ resident: residentModified }])
+    const room = Number(req.params.room)
+    const getResident = await db.residents.find({ room: room }).toArray();
+    if(getResident != 0){
+        const residentModified = [{ id: getResident[0]._id, name: getResident[0].name, email: getResident[0].email, room: getResident[0].room, bill: getResident[0].bill, role: getResident[0].role }]
+        res.status(200).send([{ resident: residentModified }])
+    }else{
+        res.status(500).send({ message: "no user with that exist" })
+    }
+    
 })
 
 //Increment bill on resident on room
