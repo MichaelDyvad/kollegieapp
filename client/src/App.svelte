@@ -76,8 +76,13 @@
         </Route>
         
         <Route path="/residents/:room">
+            {#if role === "ADMIN"}
+            <AdminNavbar />
+            <Residents />
+            {:else}
             <Navbar />
-            <Residents/>
+            <Residents />
+            {/if}
         </Route>
 
         <Route path="/login">

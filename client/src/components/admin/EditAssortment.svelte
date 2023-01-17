@@ -1,68 +1,66 @@
 <script>
-    let assortmentArray = [];
-      fetch("/api/assortment")
-      .then(res => res.json())
-      .then(result => {
-            assortmentArray = result[0].assortment
-      })
+  let assortmentArray = [];
+  fetch("/api/assortment")
+    .then((res) => res.json())
+    .then((result) => {
+      assortmentArray = result[0].assortment;
+    });
 
-      let postType;
-      let postPrice;
-      const postAssortment = async () => {
-        await fetch("/api/editassortment", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                  type: postType,
-                  price: postPrice
-              })
-          })
-          .then(res => res.json())
-          .then(result => {
-            assortmentArray = [...assortmentArray, result.assortment]
-          })
-          toastr.success(postType + " added to assortment")
-          postType = ""
-          postPrice = ""
-    }
 
-      
+  let postType;
+  let postPrice;
+  const postAssortment = async () => {
+    await fetch("/api/editassortment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type: postType,
+        price: postPrice,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {assortmentArray = [...assortmentArray, result.assortment];});
+    toastr.success(postType + " added to assortment");
+    postType = "";
+    postPrice = "";
+  };
 
-      let selected;
-      let type;
-      let price;
 
-      const patchAssortment = async () => {
-          await fetch("/api/editassortment/" + selected._id, {
-              method: "PATCH",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                  type: type,
-                  price: price
-              })
-          }).then(res => res.json())
-          .then(result => {
-            const arrayObject = assortmentArray.findIndex(assortment => assortment._id === result.assortment._id)
-            assortmentArray.splice(arrayObject, 1, result.assortment);
-            assortmentArray = [...assortmentArray]
-          })
-          toastr.success(selected.type + " edited")
+  let selected;
+  let type;
+  let price;
+  const patchAssortment = async () => {
+    await fetch("/api/editassortment/" + selected._id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type: type,
+        price: price,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const arrayObject = assortmentArray.findIndex(
+        (assortment) => assortment._id === result.assortment._id);
+        assortmentArray.splice(arrayObject, 1, result.assortment);
+        assortmentArray = [...assortmentArray];
+      });
+    toastr.success(selected.type + " edited");
+  };
 
-      }
 
-      let selectedDelete;
-      const deleteAssortment = async () => {
-        await fetch("/api/editassortment/" + selectedDelete._id, {
-            method: "DELETE"
-        })
-
-        assortmentArray = assortmentArray.filter(assortment => assortment._id != selectedDelete._id)
-        toastr.success(selectedDelete.type + " deleted")
-    }
+  let selectedDelete;
+  const deleteAssortment = async () => {
+    await fetch("/api/editassortment/" + selectedDelete._id, {
+      method: "DELETE",
+    });
+    assortmentArray = assortmentArray.filter((assortment) => assortment._id != selectedDelete._id);
+    toastr.success(selectedDelete.type + " deleted");
+  };
 </script>
 
 <h1>Edit assortment</h1>

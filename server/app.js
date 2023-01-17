@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session"
 
 import http from "http";
 import { Server } from "socket.io";
@@ -10,6 +11,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+import cors from "cors"
+app.use(cors())
+app.use(express.urlencoded({extended: true}))
 dotenv.config()
 app.use(express.json())
 
@@ -23,7 +27,7 @@ const generalLimiter = rateLimit({
   max: 80
 })
 
-import session from "express-session"
+
 const maxAgeTime = 1000 * 60 * 60
 
 
@@ -39,11 +43,6 @@ const sessionMiddleware = session({
 })
 
 app.use(sessionMiddleware)
-
-import cors from "cors"
-app.use(cors())
-app.use(express.urlencoded({extended: true}))
-app.use(express.json());
 
 //Routers
 import authRouter from "./routers/authRouter.js"

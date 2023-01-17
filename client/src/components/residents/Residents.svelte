@@ -1,20 +1,18 @@
 <script>
       const room = window.location.pathname.split("/").pop();
-
+      
       let residentArray = [];
       fetch("/api/residents/" + room)
             .then((res) => res.json())
             .then((result) => {
                   residentArray = result[0].resident;
-            });
-
+            });   
       let assortmentArray = [];
       fetch("/api/assortment")
             .then((res) => res.json())
             .then((result) => {
                   assortmentArray = result[0].assortment;
-            });
-
+            });   
       const patchResident = async (e) => {
             let price = e.target.querySelector(".child").id;
             await fetch("/api/residents/" + room, {

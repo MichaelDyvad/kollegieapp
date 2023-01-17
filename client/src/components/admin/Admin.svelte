@@ -42,13 +42,13 @@
             })
       };
 </script>
-
 <h1>Overview</h1>
-<h1>Summed bills = {bill.summedBills}</h1>
+<h1>Summed bills = {bill.summedBills}kr</h1>
+
 <div class="container">
       {#each residentsArray as resident}
             <div class="residentone">
-                  <a href="/admin">{resident.room} : {resident.bill}kr</a>
+                  <a href="/residents/{resident.room}">{resident.room} : {resident.bill} kr</a>
             </div>
       {/each}
 </div>
@@ -86,7 +86,19 @@
             margin: 5px;
             transition: all 0.3s ease-in-out;
       }
-
+      .container {
+            display: grid;
+            text-align: center;
+            gap: 30px 40px;
+            grid-template-areas:
+                  ". . . ."
+                  ". . . ."
+                  ". . . ."
+                  ". . . ."
+                  ". . . ."
+                  ". . . ."
+                  ". . . .";
+      }
       .red-button {
             background-color: rgb(207, 23, 23);
             border: none;
@@ -103,19 +115,6 @@
             border-radius: 5px 5px 5px 5px;
             margin: 5px;
             transition: all 0.3s ease-in-out;
-      }
-      .container {
-            display: grid;
-            text-align: center;
-            gap: 30px 40px;
-            grid-template-areas:
-                  ". . . ."
-                  ". . . ."
-                  ". . . ."
-                  ". . . ."
-                  ". . . ."
-                  ". . . ."
-                  ". . . .";
       }
 
       a,
