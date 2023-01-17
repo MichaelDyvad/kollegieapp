@@ -17,16 +17,15 @@ app.use(express.json())
 app.use(express.static(path.resolve("../client/dist")))
 
 import rateLimit from "express-rate-limit"
-//Limiter det gør at der kun må blive sendt et hvis antal request pr. 10 minut
-const generalLimiter = rateLimit({  
+//Limiter limits the request pr. 10 minut
+const generalLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 80
 })
 
 import session from "express-session"
-//måske skal der bruges cookie.path som gør specificerer hvornår man får tildelt en cookie
 const maxAgeTime = 1000 * 60 * 60
-const sessionName = "cookiename"
+
 
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
@@ -34,7 +33,6 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   //Dette spørger om appen kører på https, så hvis den er true = https og false = http
   cookie: {
-    name: sessionName,
     secure: false,
     maxAge: maxAgeTime
   }
@@ -44,12 +42,7 @@ app.use(sessionMiddleware)
 
 import cors from "cors"
 app.use(cors())
-
-
-app.use(express.urlencoded({
-  extended: true
-}))
-
+app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 
 //Routers
@@ -77,6 +70,9 @@ app.use(adminRouter);
 import laundryRouter from "./routers/laundryRouter.js"
 app.use(laundryRouter);
 
+import logicRouter from "./routers/logicRouter.js"
+app.use(logicRouter);
+
 //Middleware
 const redirectLogin = (req, res, next) => {
   if (!req.session.role) {
@@ -102,26 +98,10 @@ const onlyAdmin = (req, res, next) => {
   }
 }
 
-//api created to fetch the role on svelte
-app.get("/api/isadmin", (req, res) => {
-  if (req.session.role === "ADMIN") {
-    res.send({ role: "ADMIN" })
-  } else if (req.session.role === "USER") {
-    res.send({ role: "USER" })
-  } else {
-    res.send({ role: "NOT LOGGED IN" })
-  }
-})
-
-app.get("/api/user", (req, res) => {
-  const name = req.session.name
-  res.send({name:name})
-})
-
 //Restriction for endpoint roles
 app.use("/home", generalLimiter, redirectLogin);
 app.use("/tasks", generalLimiter, redirectLogin)
-// app.use("/laundry", generalLimiter, redirectLogin)
+app.use("/laundry", generalLimiter, redirectLogin)
 app.use("/admin", generalLimiter, onlyAdmin);
 app.use("/login", generalLimiter, redirectHome);
 app.use("/signup", generalLimiter, redirectHome);
@@ -142,6 +122,7 @@ app.get(["/residents/:room", "/home", "/tasks", "/laundry", "/admin", "/login", 
   res.send(page)
 });
 
+//Default all other routes that is not permitted
 app.get(("/*"), (req, res) => {
   res.send("<h1>404 page not found</h1>")
 });
