@@ -52,6 +52,7 @@
           .then(result => {
             tasksArray = [...tasksArray, result.tasks]
           })
+          toastr.success("Task added");
           taskText = ""
     }
 
@@ -72,6 +73,7 @@
             tasksArray.splice(arrayObject, 1, result.tasks);
             tasksArray = [...tasksArray]
             showModal = false;
+            toastr.success("Task edited");
           })
     }
 
@@ -83,6 +85,7 @@
             method: "DELETE",
         })
         tasksArray = tasksArray.filter(task => task._id != id)
+        toastr.error("Task deleted")
     };
 
 </script>

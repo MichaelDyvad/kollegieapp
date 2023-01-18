@@ -7,11 +7,15 @@ import { Server } from "socket.io";
 import path from "path"
 import dotenv from "dotenv"
 
+import cors from "cors"
+
+import rateLimit from "express-rate-limit"
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-import cors from "cors"
+
 app.use(cors())
 app.use(express.urlencoded({extended: true}))
 dotenv.config()
@@ -20,16 +24,14 @@ app.use(express.json())
 //Resolves the folder
 app.use(express.static(path.resolve("../client/dist")))
 
-import rateLimit from "express-rate-limit"
+
 //Limiter limits the request pr. 10 minut
 const generalLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 80
 })
 
-
 const maxAgeTime = 1000 * 60 * 60
-
 
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,

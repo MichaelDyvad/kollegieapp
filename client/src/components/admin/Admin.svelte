@@ -39,6 +39,7 @@
                         residentsArray = result.bills;
                         bill.summedBills = 0;
                         showModal = false;
+                        toastr.error("Bills resat")
                   });
       };
 </script>

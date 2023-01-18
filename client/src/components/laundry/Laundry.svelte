@@ -83,6 +83,7 @@
     .then(result => {
       laundryArray = result.laundry
       showModalReset = false;
+      toastr.error("Laundry scheme resat")
     })
   };
 </script>

@@ -27,15 +27,16 @@
                   .then((res) => res.json())
                   .then((result) => {
                         residentArray = [result.resident];
+                        toastr.success("Bill incrementet with:" + price)
                   });
       };
 </script>
 
 <br />
-<a href="/">Gå tilbage</a>
+<a href="/">Go back</a>
 {#each residentArray as resident}
       <h1>{resident.room} : {resident.name}</h1>
-      <h1>REGNING: {resident.bill}kr</h1>
+      <h1>Bill: {resident.bill}kr</h1>
 {/each}
 <div class="container">
       {#each assortmentArray as assortment}
