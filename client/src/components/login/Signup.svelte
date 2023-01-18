@@ -4,29 +4,29 @@
   let password;
   let room;
   const postSignup = async () => {
-        await fetch("/signup", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                  name: signupName,
-                  email: email,
-                  password: password,
-                  room: room
-              })
-          }).then(res => {
-                if (res.status !== 200) {
-                    toastr.error("Signup failed")
-                    location.href = "/signup"
-                } else if (res.status) {
-                    setTimeout(() => {
-                        location.href = "/admin"
-                    }, 1500)
-                    toastr.success("Signup succeded, redirecting")
-                }
-            })
-    }
+    await fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: signupName,
+        email: email,
+        password: password,
+        room: room,
+      }),
+    }).then((res) => {
+      if (res.status !== 200) {
+        toastr.error("Signup failed");
+        location.href = "/signup";
+      } else if (res.status) {
+        setTimeout(() => {
+          location.href = "/admin";
+        }, 1500);
+        toastr.success("Signup succeded, redirecting");
+      }
+    });
+  };
 </script>
 
 <h1>Sign-up</h1>

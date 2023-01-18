@@ -2,26 +2,26 @@
   let loginName;
   let password;
   const postLogin = async () => {
-        await fetch("/login", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                  name: loginName,
-                  password: password
-              })
-          }).then(res => {
-                if (res.status !== 200) {
-                    toastr.error("Login failed, name or password is wrong")
-                } else if (res.status) {
-                    setTimeout(() => {
-                        location.href = "/admin"
-                    }, 1500)
-                    toastr.success("Login succeded, redirecting")
-                }
-            })
-    }
+    await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: loginName,
+        password: password,
+      }),
+    }).then((res) => {
+      if (res.status !== 200) {
+        toastr.error("Login failed, name or password is wrong");
+      } else if (res.status) {
+        setTimeout(() => {
+          location.href = "/admin";
+        }, 1500);
+        toastr.success("Login succeded, redirecting");
+      }
+    });
+  };
 </script>
 <h1>Login</h1>
 <div class="wrapper fadeInDown">

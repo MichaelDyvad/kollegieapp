@@ -1,6 +1,6 @@
 <script>
       import Modal from "../modal/Modal.svelte";
-      
+
       let residentsArray = [];
       fetch("/api/residents")
             .then((res) => res.json())
@@ -34,21 +34,22 @@
                         bill: 0,
                   }),
             })
-            .then(res => res.json())
-            .then(result => {
-                  residentsArray = result.bills
-                  bill.summedBills = 0
-                  showModal = false;
-            })
+                  .then((res) => res.json())
+                  .then((result) => {
+                        residentsArray = result.bills;
+                        bill.summedBills = 0;
+                        showModal = false;
+                  });
       };
 </script>
+
 <h1>Overview</h1>
 <h1>Summed bills = {bill.summedBills}kr</h1>
 
 <div class="container">
       {#each residentsArray as resident}
             <div class="residentone">
-                  <a href="/residents/{resident.room}">{resident.room} : {resident.bill} kr</a>
+                  <a href="/admin">{resident.room} : {resident.bill} kr</a>
             </div>
       {/each}
 </div>
