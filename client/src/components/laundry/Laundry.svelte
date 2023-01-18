@@ -17,10 +17,6 @@
       role = result.role;
     });
 
-  let showModal = false;
-  let showModalReset = false;
-  let laundryId;
-
   let socket = io();
   let activeUsers = 0;
   socket.on("users-connected", (data) => {
@@ -31,6 +27,9 @@
             activeUsers--;
       });
 
+  let showModal = false;
+  let showModalReset = false;
+  let laundryId;
   function openModal(e) {
     e.preventDefault();
     laundryId = e.target.parentElement.id;
