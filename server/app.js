@@ -35,7 +35,6 @@ const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  //Dette spørger om appen kører på https, så hvis den er true = https og false = http
   cookie: {
     secure: false,
     maxAge: maxAgeTime
