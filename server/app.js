@@ -104,7 +104,6 @@ app.use("/tasks", generalLimiter, redirectLogin);
 app.use("/admin", generalLimiter, onlyAdmin);
 app.use("/login", generalLimiter, redirectHome);
 app.use("/signup", generalLimiter, redirectHome);
-app.use("/forgotpassword", generalLimiter);
 app.use("/editassortment", generalLimiter, onlyAdmin);
 app.use("/editresident", generalLimiter, onlyAdmin);
 
@@ -117,7 +116,7 @@ app.get("/logout", (req, res, next) => {
 //fs is used to read the index.html file in dist folder as a toString, which allows us to use the Router endpoints from svelte
 import fs from "fs"
 const page = fs.readFileSync("../client/dist/index.html").toString()
-app.get(["/residents/:room", "/home", "/tasks", "/laundry", "/admin", "/login", "/signup", "/editassortment", "/editresident", "/forgotpassword"], (req, res) => {
+app.get(["/residents/:room", "/home", "/tasks", "/laundry", "/admin", "/login", "/signup", "/editassortment", "/editresident"], (req, res) => {
   res.send(page)
 });
 
